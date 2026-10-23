@@ -1,26 +1,46 @@
 name: Generar STL imprimibles
+
 on:
   workflow_dispatch:
   push:
     paths:
       - 'diseno_3d/fusion360/*.scad'
       - '.github/workflows/generar-stl.yml'
+
+permissions:
+  contents: write
+
 jobs:
   exportar-stl:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
       - name: Instalar OpenSCAD
         run: sudo apt-get update && sudo apt-get install -y openscad
-      - name: Exportar STL
+      - name: Exportar modelos STL
         run: |
-          mkdir -p output
-          openscad -o output/base_arduino_uno.stl -D 'pieza="base"' diseno_3d/fusion360/caja_sensor_humedad.scad
-          openscad -o output/tapa_led.stl -D 'pieza="tapa"' diseno_3d/fusion360/caja_sensor_humedad.scad
-          openscad -o output/probeta_ajuste.stl -D 'pieza="calibracion"' diseno_3d/fusion360/caja_sensor_humedad.scad
+          mkdir -p diseno_3d/stl
+          openscad -o diseno_3d/stl/base_arduino_uno.stl -D 'pieza="base"' diseno_3d/fusion360/caja_sensor_humedad.scad
+          openscad -o diseno_3d/stl/tapa_led.stl -D 'pieza="tapa"' diseno_3d/fusion360/caja_sensor_humedad.scad
+          openscad -o diseno_3d/stl/probeta_ajuste.stl -D 'pieza="calibracion"' diseno_3d/fusion360/caja_sensor_humedad.scad
+          test -s diseno_3d/stl/base_arduino_uno.stl
+          test -s diseno_3d/stl/tapa_led.stl
+          test -s diseno_3d/stl/probeta_ajuste.stl
+      - name: Publicar STL en el repositorio
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add diseno_3d/stl/*.stl
+          if git diff --cached --quiet; then
+            echo "Los modelos STL ya están actualizados."
+          else
+            git commit -m "Publicar modelos STL imprimibles [skip ci]"
+            git push origin HEAD:main
+          fi
       - uses: actions/upload-artifact@v4
         with:
           name: caja_detector_humedad_STL
-          path: output/*.stl
+          path: diseno_3d/stl/*.stl
