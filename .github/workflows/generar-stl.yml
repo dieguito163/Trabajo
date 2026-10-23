@@ -1,0 +1,26 @@
+name: Generar STL imprimibles
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'diseno_3d/fusion360/*.scad'
+      - '.github/workflows/generar-stl.yml'
+jobs:
+  exportar-stl:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Instalar OpenSCAD
+        run: sudo apt-get update && sudo apt-get install -y openscad
+      - name: Exportar STL
+        run: |
+          mkdir -p output
+          openscad -o output/base_arduino_uno.stl -D 'pieza="base"' diseno_3d/fusion360/caja_sensor_humedad.scad
+          openscad -o output/tapa_led.stl -D 'pieza="tapa"' diseno_3d/fusion360/caja_sensor_humedad.scad
+          openscad -o output/probeta_ajuste.stl -D 'pieza="calibracion"' diseno_3d/fusion360/caja_sensor_humedad.scad
+      - uses: actions/upload-artifact@v4
+        with:
+          name: caja_detector_humedad_STL
+          path: output/*.stl
