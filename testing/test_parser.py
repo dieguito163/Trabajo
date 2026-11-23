@@ -13,8 +13,10 @@ class TestParser(unittest.TestCase):
     def test_intervalos(self):
         muestras = [
             ("Lectura cruda: 892  ->  Humedad: 0%  |  Estado: Seco", (892, 0, "Seco")),
-            ("Lectura cruda: 827  ->  Humedad: 12%  |  Estado: Algo seco", (827, 12, "Algo seco")),
+            ("Lectura cruda: 827  ->  Humedad: 12%  |  Estado: Seco", (827, 12, "Seco")),
+            ("Lectura cruda: 790  ->  Humedad: 19%  |  Estado: Seco", (790, 19, "Seco")),
             ("Lectura cruda: 784  ->  Humedad: 20%  |  Estado: Humedo", (784, 20, "Humedo")),
+            ("Lectura cruda: 680  ->  Humedad: 39%  |  Estado: Humedo", (680, 39, "Humedo")),
             ("Lectura cruda: 675  ->  Humedad: 40%  |  Estado: Muy humedo", (675, 40, "Muy humedo")),
         ]
         for texto, esperado in muestras:
@@ -27,6 +29,7 @@ class TestParser(unittest.TestCase):
             "Lectura cruda: 1024  ->  Humedad: 23%  |  Estado: Humedo",
             "Lectura cruda: 700  ->  Humedad: 101%  |  Estado: Muy humedo",
             "Lectura cruda: 700  ->  Humedad: 10%  |  Estado: Muy humedo",
+            "Lectura cruda: 700  ->  Humedad: 12%  |  Estado: Algo seco",
         ]
         for linea in lineas:
             with self.subTest(linea=linea):

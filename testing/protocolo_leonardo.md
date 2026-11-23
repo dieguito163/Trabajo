@@ -1,6 +1,6 @@
 # Protocolo de pruebas y validación | Arduino Leonardo
 
-**Situación:** este documento define el procedimiento y criterios de aceptación; **no representa resultados medidos**. Los registros deben obtenerse con el prototipo físico, y las pruebas del parser son una verificación de software, no una medición del suelo.
+**Situación:** definimos este procedimiento y sus criterios antes de medir; **todavía no son resultados experimentales**. Los registros deben obtenerse con el prototipo físico, y las pruebas del parser son una verificación de software, no una medición del suelo.
 
 ## Pregunta a validar
 
@@ -16,7 +16,7 @@ Registrar: fecha, tipo de suelo, cantidad de agua aplicada, profundidad de inser
 |---|---|---|---|---|
 | P1 | Lectura continua | Registrar 5 min con sensor fijo | ~300 mediciones a 1/s, sin desconexiones; cuantificar diferencia frente a ideal | CSV real y conteo |
 | P2 | Respuesta a humedad | Medir 10 muestras en aire, 10 en sustrato seco y 10 en húmedo | Lecturas reproducibles y cambio consistente al humedecer; informar medias y desviación | Tabla y gráfico |
-| P3 | Cuatro colores | Llevar lectura a condiciones que crucen 12%, 20% y 40% sin mojar electrónica | Rojo/amarillo/verde/azul coincide con tabla de firmware | Fotos o registro de observación |
+| P3 | Tres colores | Llevar la lectura a condiciones que crucen 20% y 40% sin mojar la electrónica | Rojo, verde y azul coinciden con el firmware | Fotos o registro de observación |
 | P4 | Persistencia | Capturar 2 min; cerrar registrador; abrir CSV y dashboard | El histórico sigue consultable después de cerrar capturador | Captura CSV + dashboard |
 | P5 | Actualización del panel | Con capturador y panel abiertos, variar condición del sensor | Se muestra nueva lectura e historial dentro de algunos segundos; medir latencia real | Video de demo y captura con reloj |
 | P6 | Reparabilidad | Apagar, retirar los tornillos y abrir tapa | Acceso a Arduino y conexiones sin romper carcasa | Fotos del interior |
@@ -35,7 +35,7 @@ El criterio de 300 muestras en P1 es un **objetivo nominal** (delay de 1 s + tie
 
 ## Falla y mejora a investigar
 
-El prototipo anterior usaba Arduino UNO y una calibración diferente (895/767); al migrar a Leonardo se requiere actualizar pines, código, documentación y CAD. Esto es una **iteración de diseño identificada**, no una falla de ensayo cuantificada.
+En nuestra primera versión usamos Arduino UNO y una calibración diferente (895/767); al migrar a Leonardo se requiere actualizar pines, código, documentación y CAD. Esto es una **iteración de diseño identificada**, no una falla de ensayo cuantificada.
 
 Si los datos fluctúan mucho cerca de los umbrales, **posible** mejora: filtro de promedio móvil o histéresis, pero solo implementarla tras medir la variación y sus consecuencias sobre la latencia.
 

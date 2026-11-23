@@ -17,7 +17,7 @@ PATRON = re.compile(
     r"Lectura cruda:\s*(\d+)\s*->\s*Humedad:\s*(\d+)%\s*\|\s*Estado:\s*(.+)$"
 )
 COLUMNAS = ["fecha_hora", "lectura_adc", "humedad_pct", "estado"]
-ESTADOS = {"Seco", "Algo seco", "Humedo", "Muy humedo"}
+ESTADOS = {"Seco", "Humedo", "Muy humedo"}
 RUTA_DEFECTO = Path(__file__).resolve().parents[2] / "testing" / "datos" / "lecturas.csv"
 
 
@@ -34,8 +34,7 @@ def interpretar(linea):
     if estado not in ESTADOS:
         return None
     esperado = (
-        "Seco" if porcentaje < 12 else
-        "Algo seco" if porcentaje < 20 else
+        "Seco" if porcentaje < 20 else
         "Humedo" if porcentaje < 40 else "Muy humedo"
     )
     if estado != esperado:

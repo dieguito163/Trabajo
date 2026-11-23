@@ -18,7 +18,7 @@ El firmware **no incluye librerías Arduino de terceros**. Las versiones exactas
 
 ## 2. Código externo y referencias consultadas
 
-- **Firmware Leonardo:** el código base de pines D9/D10/D11, calibración 892/350 y cuatro umbrales fue **entregado por el equipo en esta conversación**. En la actualización se documentó el significado físico del índice, se ordenaron comentarios y se conservó la lógica funcional.
+- **Firmware Leonardo:** partimos del código de nuestro proyecto, con los pines D9/D10/D11 y la calibración 892/350. Lo adaptamos para utilizar solamente los tres colores finales: rojo (0–19 %), verde (20–39 %) y azul (40–100 %).
 - **Ejemplo académico de organización:** https://github.com/jgarcia-dec/sensor-calidad-suelo-TEI201 . Se revisó como ejemplo de secciones de README, FUENTES, carpetas y requisitos de la pauta; **no se trasladaron mediciones, componentes ni resultados** de ese proyecto.
 - **Documentación de la API Arduino:** https://docs.arduino.cc/language-reference/ ; funciones de lectura analógica, salida PWM y comunicación serial.
 - **Documentación de pyserial:** https://pyserial.readthedocs.io/en/latest/shortintro.html ; lectura de líneas desde puerto serie.
@@ -33,14 +33,14 @@ No se debe completar esta sección inventando autores, fechas, versiones ni fuen
 - **Herramienta:** ChatGPT (OpenAI, GPT-6).
 - **Solicitud del equipo:** revisar el repositorio existente y el ejemplo TEI201; adaptarlo a Arduino Leonardo sin protoboard, incorporar el firmware proporcionado y dejar documentados los entregables de la pauta Avance 3.
 - **Archivos asistidos:** README.md, FUENTES.md, guías de hardware, BOM de revisión, esquema explicativo, protocolo y checklist de entrega.
-- **Adaptación:** se sustituyeron las referencias obsoletas a Arduino UNO y la calibración previa, se distinguieron hechos fotografiados de conexiones no verificadas y se mantuvieron los cuatro intervalos proporcionados por el equipo.
-- **Comprensión esperada:** el equipo debe explicar la cadena sensor → Leonardo → USB serial → CSV → dashboard, y por qué los umbrales son relativos.
+- **Adaptación:** se sustituyeron las referencias obsoletas a Arduino UNO y la calibración previa, se distinguieron hechos fotografiados de conexiones no verificadas y cambiamos el programa para mantener únicamente los tres colores que usamos en el prototipo.
+- **Comprensión esperada:** debemos poder explicar la cadena sensor → Leonardo → USB serial → CSV → dashboard, y por qué los umbrales son relativos.
 
 ### Registro de datos, dashboard y pruebas de parser — 22/11/2026
 - **Herramienta:** ChatGPT (OpenAI, GPT-6).
 - **Código generado:** software/dashboard/lector_serial.py, software/dashboard/panel.py y testing/test_parser.py.
 - **Función:** interpretar las líneas seriales emitidas por el firmware suministrado, guardar mediciones reales con marca temporal en CSV, mostrar histórico/indicadores en una aplicación local y verificar que el parser rechaza líneas inválidas.
-- **Adaptación:** el parser coincide con los textos y umbrales exactos del código Leonardo; las pruebas unitarias usan líneas sintéticas exclusivamente para validar el código y **no se presentan como datos ambientales reales**.
+- **Adaptación:** adaptamos el parser a los tres estados del código Leonardo; las pruebas unitarias usan líneas sintéticas exclusivamente para validar el código y **no se presentan como datos ambientales reales**.
 - **Limitación:** la creación del código no equivale a una demostración del funcionamiento del puerto ni del sensor. Deben comprobarlo con el montaje físico.
 
 ### Archivos CAD y planos
@@ -50,4 +50,4 @@ No se debe completar esta sección inventando autores, fechas, versiones ni fuen
 
 ## 4. Verificación académica pendiente
 
-Antes de enviar, el equipo debe comprobar que cada integrante comprende el código y completar nombres, versiones efectivamente instaladas, fuentes externas adicionales y datos reales de ensayo. El empleo de IA se declara expresamente y no implica que la IA haya realizado pruebas físicas.
+Antes de enviar, debemos comprobar que todos comprendemos el código y completar nombres, versiones efectivamente instaladas, fuentes externas adicionales y datos reales de ensayo. El empleo de IA se declara expresamente y no implica que la IA haya realizado pruebas físicas.

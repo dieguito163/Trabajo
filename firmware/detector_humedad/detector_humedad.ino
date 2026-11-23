@@ -42,14 +42,10 @@ void loop() {
   Serial.print(porcentaje);
   Serial.print("%  |  Estado: ");
 
-  // 4. Cuatro intervalos de indicacion visual.
-  if (porcentaje < 12) {
+  // 4. Tres estados de humedad y tres colores visibles.
+  if (porcentaje < 20) {
     Serial.println("Seco");
     setColor(255, 0, 0);
-  }
-  else if (porcentaje < 20) {
-    Serial.println("Algo seco");
-    setColor(255, 255, 0);
   }
   else if (porcentaje < 40) {
     Serial.println("Humedo");

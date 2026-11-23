@@ -17,8 +17,7 @@ La conversión **map(lecturaCruda, 892, 350, 0, 100)** corresponde a una **escal
 
 | Intervalo | Nombre serial | Color PWM (R,G,B) |
 |---|---|---|
-| 0–11 | Seco | 255, 0, 0 |
-| 12–19 | Algo seco | 255, 255, 0 |
+| 0–19 | Seco | 255, 0, 0 |
 | 20–39 | Humedo | 0, 255, 0 |
 | 40–100 | Muy humedo | 0, 0, 255 |
 
@@ -30,7 +29,7 @@ Estos umbrales son de la versión entregada por el equipo; **no han sido validad
 2. Tomar 10 lecturas estabilizadas con la sonda al aire, procurando no tocar los contactos.
 3. Tomar 10 con sonda en agua **sin mojar la electrónica** y anotar dispersión.
 4. Tomar 10 en tierra seca y 10 en tierra húmeda, a igual profundidad.
-5. Comparar media, variación y tiempo de respuesta, registrando los cuatro colores observados.
+5. Comparar media, variación y tiempo de respuesta, registrando los tres colores observados.
 6. Usar los resultados para decidir si se mantiene o cambia la calibración/umbrales.
 
 Consultar [protocolo completo](../../testing/protocolo_leonardo.md). Al conectar el sistema, la **fuente de verdad** sobre las entradas del LED debe ser el esquema real (revisado con multímetro), no el color del cable por intuición.

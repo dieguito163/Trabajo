@@ -27,7 +27,6 @@ st.info(
 def consejo(estado):
     return {
         "Seco": "Revisar la tierra y evaluar el riego.",
-        "Algo seco": "Observar la evolución; revisar necesidades de la planta.",
         "Humedo": "Humedad intermedia según los umbrales del equipo.",
         "Muy humedo": "Evitar regar automáticamente: confirmar con la planta y el sustrato.",
     }.get(estado, "Estado sin clasificar")

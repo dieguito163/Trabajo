@@ -1,122 +1,101 @@
-# 🌱 Detector de humedad del suelo | TEI201 — Avance 3
+# Detector de humedad del suelo — TEI201 | Avance 3
 
-**Prototipo físico:** Arduino Leonardo, sensor capacitivo de humedad del suelo, indicador LED RGB de cuatro estados y carcasa impresa en 3D desmontable. **Sin protoboard:** el montaje final utiliza conexiones directas dentro de la caja. El sensor se introduce en el sustrato desde el exterior.
+En este proyecto construimos un detector de humedad del suelo con **Arduino Leonardo**, un sensor capacitivo y un **LED RGB que muestra tres colores: rojo, verde y azul**. Usamos una carcasa impresa en 3D con tapa atornillada y dejamos el sensor fuera de la caja, conectado directamente. **No usamos protoboard** en esta versión.
 
-El sistema toma una lectura aproximadamente cada segundo, calcula un **índice relativo de humedad** con las referencias de calibración del equipo y permite decidir cuándo revisar el riego. Los datos pueden registrarse en un **CSV persistente en el computador** mediante el USB serial del Leonardo y visualizarse en un **dashboard local**. No usa WiFi ni envía datos de forma autónoma a la nube.
+Queremos saber cuándo conviene revisar el riego de una planta sin depender solamente de observar la tierra. Medimos el sensor una vez por segundo y transformamos la lectura en un índice de humedad y una señal de color. También preparamos un sistema para guardar el histórico en un computador y verlo mediante un dashboard.
 
-> **Estado verificable:** firmware y programa de registro/dashboard incorporados al repositorio; la ejecución con el hardware real y los resultados cuantitativos deben verificarse en la demo. Los modelos CAD existentes contienen archivos históricos para Arduino UNO; ver estado 3D antes de presentarlos como finales.
+> **Estado del proyecto:** ya subimos el firmware, la estructura del dashboard, el esquema funcional, la documentación y los modelos 3D referenciales. Todavía tenemos que realizar y documentar las pruebas con el prototipo físico, completar costos y adjuntar el ensamble final de Fusion 360.
 
-## Equipo
+## Cómo funciona
 
-- **Integrantes:** completar con los nombres reales del equipo y sus roles antes de entregar.
-- **Asignatura:** TEI201, Taller de Diseño en Ingeniería, UAI.
-- **Referencia de evaluación:** Avance 3, 23 de noviembre de 2026.
+1. Conectamos el sensor capacitivo a la entrada analógica **A0** del Arduino Leonardo.
+2. Convertimos la lectura usando los puntos de calibración que obtuvimos para el prototipo: **892 al aire** y **350 en agua**.
+3. Mostramos el estado de la humedad mediante el LED RGB.
+4. Cuando conectamos el Leonardo por USB a un computador, podemos registrar los datos en un **CSV** y visualizarlos en un dashboard local.
 
-## Problema y propuesta
+El porcentaje de humedad que calculamos es **relativo a esos dos valores de calibración**: no corresponde a un porcentaje volumétrico medido con instrumentos de laboratorio.
 
-El exceso o la falta de riego puede afectar el cuidado de plantas. Sin una medición del suelo, una persona debe decidir principalmente por observación. Este prototipo entrega una indicación comprensible mediante un LED y un registro temporal de mediciones que permite observar la tendencia. **No determina por sí solo la cantidad de agua necesaria ni tiene umbrales universales para todas las especies.**
+## Colores y criterios de riego
 
-## Arquitectura real del sistema
+| Índice de humedad | Color del LED | Interpretación |
+|---|---|---|
+| **0–19 %** | 🔴 Rojo | Suelo seco: revisar si necesita riego |
+| **20–39 %** | 🟢 Verde | Suelo húmedo: observar evolución |
+| **40–100 %** | 🔵 Azul | Suelo muy húmedo: revisar antes de añadir más agua |
 
-~~~text
-Tierra → Sensor capacitivo (A0) → Arduino Leonardo
-                                      ├─ PWM D9/D10/D11 → LED RGB
-                                      └─ USB serial 9600 baudios
-                                           ↓
-                               Computador + lector_serial.py
-                                           ↓
-                                    CSV persistente
-                                           ↓
-                                    Dashboard Streamlit
-                                 (gráfica + estado + promedio)
-~~~
+Estos intervalos son parte de nuestro prototipo. No sirven como recomendación universal para todas las plantas y tipos de tierra.
 
-**Importante:** para el dashboard deben estar conectados por USB el Leonardo y el computador. El Monitor Serie de Arduino IDE debe cerrarse antes de abrir el capturador; no pueden usar simultáneamente el mismo puerto.
+## Componentes y conexiones
 
-## Estados del LED
-
-| Índice relativo | Estado | Color | Interpretación orientativa |
-|---|---|---|---|
-| 0 a 11 % | Seco | 🔴 Rojo | Revisar el sustrato y evaluar riego |
-| 12 a 19 % | Algo seco | 🟡 Amarillo | Seguir observando |
-| 20 a 39 % | Húmedo | 🟢 Verde | Estado intermedio según la calibración |
-| 40 a 100 % | Muy húmedo | 🔵 Azul | Evitar añadir agua sin revisar la planta |
-
-La función del firmware es **map(lecturaCruda, 892, 350, 0, 100)** y luego **constrain(..., 0, 100)**. El 0 % es la referencia al aire y 100 % la referencia en agua que facilitó el equipo. **Esto no mide humedad volumétrica real** y los umbrales son decisiones de diseño que deben validarse con el sustrato y la planta concretos.
-
-## Hardware y conexiones
-
-| Elemento | Conexión prevista |
+| Elemento | Conexión |
 |---|---|
-| Sensor capacitivo, señal analógica | A0 del Leonardo |
-| Sensor, alimentación y tierra | Alimentación compatible y GND (verificar serigrafía del módulo) |
-| Canal rojo del LED RGB | D9 (PWM) |
-| Canal verde del LED RGB | D10 (PWM) |
-| Canal azul del LED RGB | D11 (PWM) |
-| Común del LED / retorno | Según módulo: cátodo común a GND si activo en alto |
-| Alimentación y datos | Cable USB de datos al computador |
+| Sensor capacitivo | A0 del Leonardo + alimentación compatible + GND |
+| LED RGB — rojo | Pin **D9** (PWM) |
+| LED RGB — verde | Pin **D10** (PWM) |
+| LED RGB — azul | Pin **D11** (PWM) |
+| Computador | Puerto USB del Leonardo |
 
-**No hay protoboard en la versión final.** Verificar el tipo de LED (cátodo común/ánodo común), el orden real de sus terminales y si tiene resistencias integradas; un LED RGB discreto necesita resistencia limitadora en cada canal. El color correcto no puede confirmarse únicamente con las fotos de la caja cerrada. [Documentación de hardware](hardware/README.md) · [Esquema funcional](hardware/esquemas/esquema_leonardo.svg) · [BOM actualizada](hardware/bom/BOM_leonardo.csv).
+Las tres salidas PWM controlan **un LED RGB**, no tres luces diferentes. Antes de encender, debemos comprobar si el LED es de cátodo común o ánodo común y si incluye resistencias limitadoras. El esquema actual muestra conexiones funcionales, pero falta compararlo con el cableado interno de nuestro montaje.
 
-## Cómo cargar el código en el Leonardo
+- [Esquema funcional Leonardo](hardware/esquemas/esquema_leonardo.svg)
+- [Lista de materiales](hardware/bom/BOM_leonardo.csv)
+- [Fotografías y evidencias pendientes](hardware/fotos/README.md)
 
-1. Instalar [Arduino IDE](https://www.arduino.cc/en/software) y conectar el Leonardo con **USB de datos**.
-2. Abrir [firmware/detector_humedad/detector_humedad.ino](firmware/detector_humedad/detector_humedad.ino) en Arduino IDE.
-3. Seleccionar **Herramientas → Placa → Arduino AVR Boards → Arduino Leonardo** y el puerto correcto.
-4. Pulsar **Verificar** y **Subir**.
-5. Abrir brevemente **Monitor Serie a 9600 baudios** para comprobar que se reciben lecturas cada segundo. **Cerrarlo** antes de iniciar el registrador.
+## Código e instalación
 
-El firmware no requiere librerías externas adicionales al core de Arduino AVR.
+Nuestro código principal está en [firmware/detector_humedad/detector_humedad.ino](firmware/detector_humedad/detector_humedad.ino).
 
-## Cómo guardar los datos y abrir el dashboard
+1. Instalamos [Arduino IDE](https://www.arduino.cc/en/software) y conectamos el Leonardo con un cable USB de datos.
+2. Abrimos el archivo `detector_humedad.ino`.
+3. Seleccionamos la placa **Arduino Leonardo** y el puerto correspondiente.
+4. Verificamos y subimos el programa.
+5. Para revisar las lecturas, abrimos el Monitor Serie a **9600 baudios**. Antes de iniciar el registrador de Python tenemos que **cerrar el Monitor Serie**.
 
-Requiere **Python 3.10 o posterior**. Desde la carpeta raíz de este repositorio:
+## Guardado de datos y dashboard
 
-~~~bash
+Nuestro Leonardo no tiene conexión WiFi integrada. Para almacenar y visualizar datos conectamos el dispositivo por **USB** a un computador. Desarrollamos un lector serial en Python que escribe los datos en `testing/datos/lecturas.csv` y un panel local en Streamlit que muestra evolución temporal, estado actual y estadísticas.
+
+Desde la carpeta principal del proyecto instalamos:
+
+```bash
 python -m pip install -r software/dashboard/requirements.txt
 python -m serial.tools.list_ports
-~~~
+```
 
-Con el puerto identificado, en una primera terminal:
+Con el puerto real identificado, en una terminal ejecutamos (el ejemplo usa COM5):
 
-~~~bash
+```bash
 python software/dashboard/lector_serial.py --puerto COM5
-~~~
+```
 
-Reemplazar **COM5** por el puerto real (en Linux puede ser **/dev/ttyACM0**). En una **segunda terminal**, sin cerrar la primera:
+Y en otra terminal abrimos el dashboard:
 
-~~~bash
+```bash
 python -m streamlit run software/dashboard/panel.py
-~~~
+```
 
-Streamlit abre un navegador local (habitualmente **http://localhost:8501**). El capturador registra la fecha/hora, lectura ADC, índice de humedad y estado en **testing/datos/lecturas.csv**. El dashboard lee ese CSV aproximadamente cada 2 segundos: muestra estado actual, promedio, historial, mínimo/máximo y gráfica. El archivo persiste después de apagar el Leonardo, aunque el PC debe permanecer conectado mientras se adquieren muestras.
+El dashboard funciona localmente en el computador. **No subimos datos ficticios como pruebas:** nos falta obtener una sesión real con el dispositivo y guardar capturas del gráfico.
 
-**No se incluyen muestras inventadas:** si todavía no hay archivo CSV, el dashboard mostrará un aviso. Para entregar evidencia cuantitativa, deben ejecutar una prueba real, conservar el CSV resultante y subir capturas del dashboard. [Guía de instalación y problemas](software/dashboard/README.md).
+[Manual del dashboard](software/dashboard/README.md) · [Protocolo de pruebas](testing/protocolo_leonardo.md)
 
-## Carpeta del proyecto
+## Diseño 3D
 
-~~~text
-README.md
-FUENTES.md                  ← declaración obligatoria de librerías, código e IA
-firmware/detector_humedad/  ← versión actual: Leonardo
-software/dashboard/         ← lector USB serial, dashboard y dependencias
-hardware/                   ← materiales, conexiones y fotos
-diseno_3d/                  ← CAD, STL, plano y notas de compatibilidad
-testing/                    ← protocolos, plantilla, pruebas y resultados reales
-documentacion/              ← informe y presentación del equipo
-docs/                       ← checklist honesto de entrega
-iteraciones/                ← registro de cambios de prototipo
-~~~
+Diseñamos una carcasa con una tapa que se puede desmontar para acceder a los componentes. Tenemos modelos referenciales en OpenSCAD, STL y un plano PDF para la versión Leonardo. También conservamos archivos anteriores del diseño con Arduino UNO como parte del historial de desarrollo.
 
-## Diseño 3D, reparabilidad y evidencia
+Antes de entregar necesitamos comparar las medidas reales del montaje con el CAD y añadir el **ensamble nativo de Fusion 360 (.f3d o .f3z)** que pide la pauta. No consideramos que los STL sean un reemplazo de ese archivo.
 
-La carcasa fotografiada usa tornillos para retirar la tapa, de manera que puede abrirse sin romper la pieza; el sensor externo se conecta mediante cable. **La resistencia de conexiones, accesibilidad interna, tolerancias y dimensiones no pueden validarse únicamente con las imágenes exteriores.** Los STL previos del repositorio están asociados al diseño UNO; existe una versión CAD referencial para Leonardo, pero sigue pendiente comparar el gemelo 3D con medidas del montaje real y adjuntar un archivo Fusion 360 **.f3d o .f3z** completo.
+[Modelos, STL, planos y renders](diseno_3d/README.md)
 
-[Ver documentos 3D](diseno_3d/README.md) · [Ver protocolo de pruebas](testing/protocolo_leonardo.md) · [Ver estado frente a pauta](docs/ESTADO_ENTREGA.md).
+## Pruebas y estado de entrega
 
-## Honestidad técnica y académica
+Preparamos un protocolo para comprobar las lecturas, las transiciones entre los **tres colores**, el almacenamiento del CSV, el dashboard y la apertura de la tapa. Las pruebas de interpretación del puerto serial ya pasaron automáticamente en GitHub; eso **no sustituye** las mediciones reales del suelo ni la demostración del prototipo.
 
-- **Probado en software:** se proporcionan pruebas unitarias del parser de tramas, diferentes de una validación del hardware. Ejecutar con **python -m unittest discover -s testing -p "test_*.py"**.
-- **No afirmamos pruebas que no se han ejecutado:** las mediciones, latencia real, comparación de suelo seco/húmedo y demo deben medirse con el equipo.
-- **Fuentes e IA:** ver [FUENTES.md](FUENTES.md), **obligatorio en la evaluación**.
-- Se tomó como referencia de organización el [ejemplo de TEI201](https://github.com/jgarcia-dec/sensor-calidad-suelo-TEI201), sin atribuir su hardware o sus resultados a este proyecto.
+Nuestra lista de pendientes está en [docs/ESTADO_ENTREGA.md](docs/ESTADO_ENTREGA.md). El guion para explicar el proyecto está en [documentacion/presentacion/guion_avance3.md](documentacion/presentacion/guion_avance3.md).
+
+## Equipo y fuentes
+
+**Integrantes:** [agregar nombres y roles reales].
+
+**Asignatura:** TEI201 — Taller de Diseño en Ingeniería, Universidad Adolfo Ibáñez.
+
+Nuestra referencia de organización fue el [repositorio de ejemplo de TEI201](https://github.com/jgarcia-dec/sensor-calidad-suelo-TEI201). Documentamos las herramientas, bibliografía y asistencia utilizada en [FUENTES.md](FUENTES.md), como exige la pauta.
