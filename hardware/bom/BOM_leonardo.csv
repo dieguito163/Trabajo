@@ -1,0 +1,10 @@
+ID,Componente,Cantidad,Especificacion,Funcion,Costo_unitario_CLP,Costo_total_CLP,Estado_costo,Observaciones
+1,Arduino Leonardo,1,ATmega32u4; USB serial; ADC A0; PWM D9 D10 D11,Control y comunicacion,,,Por confirmar,Reemplaza el Arduino UNO anterior
+2,Sensor capacitivo de humedad,1,Salida analogica A0; modelo exacto por verificar,Medicion del sustrato,,,Por confirmar,Sonda fuera de la caja
+3,Modulo LED RGB,1,Canales R G B y comun; tipo de comun por verificar,Indicador visual,,,Por confirmar,Verificar resistencias integradas
+4,Resistencias limitadoras RGB,3,Valor segun caracteristicas de LED y alimentacion,Proteccion de canales,,,Condicional,Solo si el modulo no trae resistencias
+5,Cables/conectores aislados,1,Conjunto de conexiones directas sin protoboard,Cableado interno,,,Por confirmar,Medir longitud real del conjunto
+6,Cable USB de datos,1,Compatible con conector del Leonardo,Alimentacion y datos al computador,,,Por confirmar,Confirmar conector USB fisico
+7,Base impresa en 3D,1,PLA o PETG; dimensiones por verificar,Encapsulado,,,Por confirmar,No impermeable
+8,Tapa impresa en 3D,1,PLA o PETG; desmontable,Acceso y reparabilidad,,,Por confirmar,Fijaciones por tornillos
+9,Tornillos y elementos de fijacion,1,Juego de tornillos segun caja; medidas por verificar,Cierre desmontable,,,Por confirmar,La foto externa muestra varios tornillos
