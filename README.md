@@ -119,9 +119,9 @@ Dejamos documentados el [protocolo](testing/protocolo_leonardo.md), el [análisi
 
 | Integrante | Responsabilidad |
 |---|---|
-| Nicolás Bajwol | Diseño 3D |
+| Nicolas Bajwol | Diseño 3D |
 | Vicente Romero | Ensamblaje |
-| Samuel Gutiérrez | Hardware |
+| Samuel Gutierrez | Hardware |
 | Diego Osorio | Software |
 | Clemente Alfonos | Ensamblaje y pruebas |
 
