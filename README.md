@@ -4,7 +4,7 @@ Proyecto TEI201 — Taller de Diseño en Ingeniería, Universidad Adolfo Ibáñe
 
 Construimos un detector de humedad del suelo para facilitar el cuidado de las plantas. Utilizamos un **Arduino Leonardo**, un **sensor capacitivo** y un **LED RGB** que indica tres niveles mediante los colores rojo, verde y azul. Armamos el circuito **sin protoboard** y lo incorporamos en una carcasa impresa en 3D, con tapa desmontable y el sensor hacia el exterior.
 
-![Nuestro prototipo](hardware/fotos/vista_superior.jpg)
+![Nuestro prototipo desde tres ángulos](hardware/fotos/vistas_del_montaje.jpg)
 
 ## Problema y solución
 
