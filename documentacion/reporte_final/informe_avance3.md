@@ -6,9 +6,9 @@ Desarrollamos el proyecto entre cinco integrantes, distribuyendo las tareas de d
 
 | Integrante | Área de trabajo |
 |---|---|
-| Nicolás Bajwol | Diseño 3D |
+| Nicolas Bajwol | Diseño 3D |
 | Vicente Romero | Ensamblaje |
-| Samuel Gutiérrez | Hardware |
+| Samuel Gutierrez | Hardware |
 | Diego Osorio | Software |
 | Clemente Alfonos | Ensamblaje y pruebas |
 
