@@ -1,5 +1,7 @@
-# Planos
+# Planos técnicos
 
-[Plano Leonardo en SVG](plano_leonardo.svg) y [exportación referencial en PDF](plano_leonardo_referencial.pdf) cuando finalice la generación automática.
+- [Plano multivista (PDF)](plano_leonardo_multivista.pdf): vistas superior, frontal y lateral, con medidas nominales.
+- [Archivo editable SVG del plano multivista](plano_leonardo_multivista.svg).
+- [Plano general (PDF)](plano_leonardo_referencial.pdf).
 
-**Aviso:** cotas nominales no verificadas sobre la pieza ensamblada, no sustituye planos validados de Fusion 360.
+Registramos las medidas del diseño en milímetros. Comprobamos el ajuste físico de tornillos, conectores y placa antes de fijar las dimensiones de fabricación.

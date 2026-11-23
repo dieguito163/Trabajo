@@ -1,6 +1,6 @@
 // Detector humedad suelo TEI201 - referencia CAD para Arduino Leonardo (mm)
 // NO es el archivo Fusion 360 nativo; verificar dimensiones y fijaciones del montaje real.
-// Modos: pieza="base", "tapa", "calibracion", "ambas", "vista".
+// Modos: pieza="base", "tapa", "calibracion", "ambas", "vista", "cerrada", "interior", "explosion".
 pieza="vista"; $fn=48;
 caja_x=104; caja_y=82; caja_alto=38; pared=2.6; piso=3; radio=4.5;
 tapa_grosor=3; tolerancia=0.25; soporte_alto=6;
@@ -72,6 +72,25 @@ else if(pieza=="calibracion") difference(){
     for(p=[[9,2.2],[21,2.7],[34,led_diam]]) translate([p[0],7,-0.1]) cylinder(d=p[1],h=5.2);
 }
 else if(pieza=="ambas"){base();translate([0,0,caja_alto+6]) tapa();}
+else if(pieza=="cerrada"){
+    color([0.80,0.82,0.82]) base();
+    color([0.96,0.96,0.94]) translate([0,0,caja_alto]) tapa();
+    color([0.88,0.24,0.22]) translate([led_x,led_y,caja_alto+tapa_grosor+1.2]) sphere(d=5.5);
+    sensor_ref();
+}
+else if(pieza=="interior"){
+    color([0.81,0.82,0.79]) base();
+    leonardo_ref();
+    rgb_ref();
+    sensor_ref();
+}
+else if(pieza=="explosion"){
+    color([0.82,0.83,0.80]) base();
+    translate([0,0,13]) leonardo_ref();
+    color([0.95,0.95,0.93]) translate([0,0,caja_alto+38]) tapa();
+    color([0.1,0.25,0.17]) translate([0,0,18]) rgb_ref();
+    sensor_ref();
+}
 else if(pieza=="vista"){
     color([0.72,0.77,0.77]) base(); leonardo_ref(); rgb_ref();
     color([0.95,0.95,0.91,0.55]) translate([0,0,caja_alto+14]) tapa();

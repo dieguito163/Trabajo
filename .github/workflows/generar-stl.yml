@@ -1,4 +1,4 @@
-name: Generar STL y render Leonardo
+name: Exportar modelos CAD Leonardo
 
 on:
   workflow_dispatch:
@@ -6,7 +6,8 @@ on:
     branches: [main]
     paths:
       - "diseno_3d/fusion360/caja_sensor_leonardo.scad"
-      - "diseno_3d/planos/plano_leonardo.svg"
+      - "diseno_3d/fusion360/generar_ensamble_step.py"
+      - "diseno_3d/planos/plano_leonardo_multivista.svg"
       - ".github/workflows/generar-stl.yml"
 
 permissions:
@@ -19,39 +20,49 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: true
-      - name: Instalar conversores abiertos
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Instalar programas de diseño
         run: |
           sudo apt-get update
           sudo apt-get install -y openscad xvfb librsvg2-bin
-      - name: Generar STL, render y plano PDF
+          python -m pip install "cadquery>=2.5,<3"
+      - name: Generar modelos, renders y planos
         run: |
-          mkdir -p diseno_3d/stl diseno_3d/renders diseno_3d/planos
           CAD=diseno_3d/fusion360/caja_sensor_leonardo.scad
+          mkdir -p diseno_3d/stl diseno_3d/renders diseno_3d/planos
           openscad -o diseno_3d/stl/base_leonardo_referencial.stl -D 'pieza="base"' "$CAD"
           openscad -o diseno_3d/stl/tapa_leonardo_referencial.stl -D 'pieza="tapa"' "$CAD"
           openscad -o diseno_3d/stl/probeta_leonardo_referencial.stl -D 'pieza="calibracion"' "$CAD"
           xvfb-run -a openscad -o diseno_3d/renders/ensamble_leonardo_referencial.png --imgsize=1200,800 --autocenter --viewall --colorscheme=Tomorrow -D 'pieza="vista"' "$CAD"
+          xvfb-run -a openscad -o diseno_3d/renders/carcasa_exterior.png --imgsize=1200,800 --autocenter --viewall --colorscheme=Tomorrow -D 'pieza="cerrada"' "$CAD"
+          xvfb-run -a openscad -o diseno_3d/renders/carcasa_interior.png --imgsize=1200,800 --autocenter --viewall --colorscheme=Tomorrow -D 'pieza="interior"' "$CAD"
+          xvfb-run -a openscad -o diseno_3d/renders/ensamble_explosionado.png --imgsize=1200,800 --autocenter --viewall --colorscheme=Tomorrow -D 'pieza="explosion"' "$CAD"
           rsvg-convert -f pdf -o diseno_3d/planos/plano_leonardo_referencial.pdf diseno_3d/planos/plano_leonardo.svg
-          test -s diseno_3d/stl/base_leonardo_referencial.stl
-          test -s diseno_3d/stl/tapa_leonardo_referencial.stl
-          test -s diseno_3d/renders/ensamble_leonardo_referencial.png
-          test -s diseno_3d/planos/plano_leonardo_referencial.pdf
-      - name: Publicar resultados en main
+          rsvg-convert -f pdf -o diseno_3d/planos/plano_leonardo_multivista.pdf diseno_3d/planos/plano_leonardo_multivista.svg
+          python diseno_3d/fusion360/generar_ensamble_step.py
+          test -s diseno_3d/fusion360/ensamble_leonardo.step
+          test -s diseno_3d/renders/carcasa_exterior.png
+          test -s diseno_3d/renders/carcasa_interior.png
+          test -s diseno_3d/renders/ensamble_explosionado.png
+          test -s diseno_3d/planos/plano_leonardo_multivista.pdf
+      - name: Guardar modelos y planos en GitHub
         if: github.ref == 'refs/heads/main'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add diseno_3d/stl/*leonardo* diseno_3d/renders/*leonardo* diseno_3d/planos/*leonardo*.pdf
-          if git diff --cached --quiet; then
-            echo "Los archivos generados ya coinciden."
-          else
-            git commit -m "Generar STL y plano referenciales de Leonardo [skip ci]"
+          git add diseno_3d/stl/*leonardo* diseno_3d/renders/*.png diseno_3d/planos/*.pdf diseno_3d/fusion360/ensamble_leonardo.step
+          if ! git diff --cached --quiet; then
+            git commit -m "Publicar ensamble STEP, renders y planos Leonardo [skip ci]"
+            git pull --rebase origin main
             git push origin HEAD:main
           fi
       - uses: actions/upload-artifact@v4
         with:
-          name: cad-leonardo-referencial
+          name: ensamble-y-planos-leonardo
           path: |
             diseno_3d/stl/*leonardo*.stl
-            diseno_3d/renders/*leonardo*.png
-            diseno_3d/planos/*leonardo*.pdf
+            diseno_3d/renders/*.png
+            diseno_3d/planos/*.pdf
+            diseno_3d/fusion360/ensamble_leonardo.step

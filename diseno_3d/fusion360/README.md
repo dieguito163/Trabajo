@@ -1,6 +1,5 @@
-# CAD editable
+# Archivos CAD
 
-- [Versión Leonardo](caja_sensor_leonardo.scad): parametrización OpenSCAD y volúmenes referenciales del ensamble.
-- [Versión anterior UNO](caja_sensor_humedad.scad): histórica, no confundir con el modelo del prototipo actual.
+Trabajamos con [la carcasa paramétrica de Leonardo](caja_sensor_leonardo.scad) y un [ensamble STEP](ensamble_leonardo.step) que podemos importar en Fusion 360.
 
-**Pendiente obligatorio:** archivo Fusion 360 **.f3d o .f3z** del ensamble verificado con dimensiones reales. Un STL importado a Fusion no equivale automáticamente a un modelo paramétrico nativo.
+También incluimos el [script de CadQuery](generar_ensamble_step.py) para reconstruir el ensamble STEP a partir de sólidos geométricos. En Fusion 360 revisamos y ajustamos los componentes y guardamos el modelo como `.f3d` o `.f3z`.

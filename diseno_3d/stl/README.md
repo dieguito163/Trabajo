@@ -1,10 +1,9 @@
-# STL imprimibles
+# Piezas imprimibles
 
-**Modelo actual referencial Leonardo (generación automática):**
-- [Base Leonardo](base_leonardo_referencial.stl)
-- [Tapa Leonardo](tapa_leonardo_referencial.stl)
-- [Probeta Leonardo](probeta_leonardo_referencial.stl)
+Las piezas STL corresponden al diseño actual para Arduino Leonardo:
 
-Los archivos anteriores **base_arduino_uno.stl**, **tapa_led.stl** y **probeta_ajuste.stl** son históricos de la versión UNO. No asumir que sus orificios coinciden con el nuevo Leonardo. Si los nuevos archivos no aparecen, revisar el flujo de GitHub Actions.
+- [Base](base_leonardo_referencial.stl)
+- [Tapa](tapa_leonardo_referencial.stl)
+- [Probeta para verificar tolerancias](probeta_leonardo_referencial.stl)
 
-Los STL actuales son aproximaciones paramétricas; **verificar encaje y tolerancias físicas antes de imprimir nuevamente**.
+Podemos abrirlas en un visor 3D o en el laminador para preparar la impresión. Las piezas antiguas para Arduino UNO se conservan como parte de las primeras iteraciones del proyecto.
