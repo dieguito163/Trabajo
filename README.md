@@ -98,7 +98,7 @@ Preparamos un [modelo 3D para Arduino Leonardo](diseno_3d/README.md) con sus pie
 
 ## Pruebas y mejoras
 
-En nuestras primeras pruebas, **el prototipo funciona en general**: responde a los cambios de lectura del sensor y utiliza el LED para representar el estado. La mejora principal es la **calibración**, ya que necesitamos contrastar los valores con distintos niveles de humedad del suelo y ajustar los límites para obtener indicaciones más consistentes.
+En nuestra evaluación preliminar obtuvimos una **precisión del 81 %**. El prototipo funciona en general: responde a los cambios de lectura del sensor y utiliza el LED para representar el estado. Todavía necesitamos mejorar la **calibración** para que los valores correspondan mejor a las condiciones del suelo. Para respaldar ese porcentaje de manera reproducible debemos registrar cómo se calculó y con qué mediciones lo comparamos.
 
 Dejamos documentados el [protocolo](testing/protocolo_leonardo.md), el [análisis de funcionamiento](testing/reportes/resultados_preliminares.md) y las herramientas para analizar los datos que registremos.
 

@@ -103,7 +103,7 @@ Las medidas del modelo son nominales, por lo que necesitamos contrastar el monta
 
 ## 7. Pruebas de funcionamiento
 
-Durante las primeras pruebas observamos que **el prototipo funciona en general**: el sensor permite obtener lecturas y el indicador responde mediante los colores programados. Con esto comprobamos el funcionamiento básico de la idea de medir y comunicar el estado de humedad de forma visual.
+Durante las primeras pruebas observamos que **el prototipo funciona en general**: el sensor permite obtener lecturas y el indicador responde mediante los colores programados. En nuestra evaluación preliminar obtuvimos una **precisión del 81 %**. Este porcentaje corresponde a nuestra evaluación inicial; aún necesitamos documentar el criterio de comparación y los registros utilizados para reproducir el cálculo, por lo que no lo consideramos una precisión instrumental certificada.
 
 El aspecto que todavía debemos mejorar es la **calibración**. Aunque usamos referencias de 892 al aire y 350 en agua, necesitamos realizar ensayos sistemáticos con tierra seca y húmeda para verificar que esos valores sean representativos de nuestro sustrato. También debemos estudiar si los límites de 20 % y 40 % separan adecuadamente las condiciones que queremos mostrar.
 

@@ -2,7 +2,7 @@
 
 ## Funcionamiento
 
-En las primeras pruebas, **nuestro detector funciona en general**: recibimos la lectura del sensor y utilizamos el LED RGB para representar el nivel calculado de humedad. El montaje incorpora Arduino Leonardo, cableado directo sin protoboard y carcasa impresa en 3D.
+En las primeras pruebas, **nuestro detector funciona en general**: recibimos la lectura del sensor y utilizamos el LED RGB para representar el nivel calculado de humedad. En nuestra evaluación inicial obtuvimos una **precisión del 81 %**. El montaje incorpora Arduino Leonardo, cableado directo sin protoboard y carcasa impresa en 3D.
 
 Los estados de nuestro programa son:
 
@@ -26,10 +26,10 @@ Con estos cambios conseguimos un montaje más compacto y una señal visual senci
 
 ## Datos cuantitativos
 
-Los valores **892 y 350 son referencias de nuestro código**, no promedios de una serie experimental documentada en este informe. Para el análisis cuantitativo utilizaremos el CSV que obtengamos del Leonardo conectado al computador, de modo que podamos calcular cantidad de muestras, promedio, dispersión e intervalo de actualización.
+En nuestra evaluación inicial obtuvimos **81 % de precisión**. Para poder comprobar este porcentaje nuevamente debemos registrar cuántas pruebas realizamos, cuál fue la referencia de comparación y cómo calculamos el resultado. Por ahora no podemos afirmar que se trata de una precisión instrumental validada. Los valores **892 y 350 son referencias de nuestro código**, no promedios de una serie experimental documentada en este informe. El CSV del Leonardo nos permitirá respaldar las próximas mediciones con un registro y calcular promedios, dispersión e intervalos de actualización.
 
 [Protocolo de pruebas](../protocolo_leonardo.md) · [Programa de análisis](../analizar_datos.py) · [Dashboard](../../software/dashboard/README.md)
 
 ## Conclusión
 
-La función principal del detector está implementada y el dispositivo responde en general como esperamos. La calibración es la parte que necesitamos seguir ajustando para que los colores representen de manera más consistente el estado real de la tierra y la información sea más útil al decidir cuándo regar.
+La función principal del detector está implementada y, en nuestra evaluación inicial, obtuvimos un 81 % de precisión. Seguimos ajustando la calibración para mejorar la correspondencia entre los colores y el estado real de la tierra, y documentaremos nuevas pruebas para verificar el resultado.
