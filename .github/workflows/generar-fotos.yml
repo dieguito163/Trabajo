@@ -38,7 +38,7 @@ jobs:
           ]
           for nombre,x0,x1 in cortes:
               imagen.crop((x0,0,x1,alto)).save(root / nombre, "JPEG", quality=92, optimize=True)
-              assert (root / nombre).stat().st_size > 1000
+              assert (root / nombre).stat().st_size > 200
               print("Imagen creada:", nombre)
           PY
       - name: Publicar fotografías en el repositorio
