@@ -1,3 +1,6 @@
 # CAD editable
 
-El archivo .scad es el modelo paramétrico fuente. Para Fusion 360 se puede importar el STL como malla, pero para entregar un .f3d plenamente editable debe reconstruirse o convertir el diseño en Fusion 360.
+- [Versión Leonardo](caja_sensor_leonardo.scad): parametrización OpenSCAD y volúmenes referenciales del ensamble.
+- [Versión anterior UNO](caja_sensor_humedad.scad): histórica, no confundir con el modelo del prototipo actual.
+
+**Pendiente obligatorio:** archivo Fusion 360 **.f3d o .f3z** del ensamble verificado con dimensiones reales. Un STL importado a Fusion no equivale automáticamente a un modelo paramétrico nativo.

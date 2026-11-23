@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 660" width="1160" height="660">
+<rect width="1160" height="660" fill="#f6faf8"/>
+<g font-family="Arial,sans-serif" fill="#18352b">
+<text x="46" y="55" font-weight="bold" font-size="29">Esquema funcional — detector de humedad Leonardo</text>
+<text x="46" y="87" font-size="17">Versión sin protoboard. Esquema a contrastar con el cableado real antes de energizar.</text>
+</g>
+<g stroke-width="3" stroke="#487b65" fill="#e7f5ed"><rect x="43" y="160" width="268" height="194" rx="17"/><rect x="412" y="135" width="335" height="254" rx="17"/><rect x="857" y="170" width="257" height="183" rx="17"/><rect x="413" y="463" width="334" height="139" rx="17"/></g>
+<g font-family="Arial,sans-serif" fill="#133528">
+<text x="65" y="198" font-size="24" font-weight="bold">Sensor capacitivo</text><text x="65" y="226" font-size="17">Salida analógica: A0</text><text x="65" y="256" font-size="17">Alimentación: VCC</text><text x="65" y="286" font-size="17">Tierra: GND</text>
+<text x="440" y="177" font-size="27" font-weight="bold">Arduino Leonardo</text><text x="440" y="210" font-size="18">A0: lectura de humedad</text><text x="440" y="246" font-size="18">D9 PWM: rojo</text><text x="440" y="275" font-size="18">D10 PWM: verde</text><text x="440" y="304" font-size="18">D11 PWM: azul</text><text x="440" y="340" font-size="18">USB serial: 9600 baud</text>
+<text x="878" y="210" font-size="25" font-weight="bold">LED RGB</text><text x="878" y="245" font-size="18">Rojo → D9</text><text x="878" y="274" font-size="18">Verde → D10</text><text x="878" y="303" font-size="18">Azul → D11</text><text x="878" y="335" font-size="15">Común y resistencias: verificar</text>
+<text x="442" y="505" font-size="24" font-weight="bold">Computador conectado por USB</text><text x="442" y="535" font-size="18">pyserial → CSV → dashboard local</text><text x="442" y="565" font-size="17">Registro histórico con fecha y hora</text>
+</g>
+<g fill="none" stroke="#276f50" stroke-width="5" stroke-linecap="round"><path d="M312 250 H412"/><path d="M747 250 H857"/><path d="M578 389 V463"/></g><g fill="#276f50"><path d="M412 250 l-16 -9 v18z"/><path d="M857 250 l-16 -9 v18z"/><path d="M578 463 l-9 -16 h18z"/></g>
+<rect x="42" y="620" width="1073" height="28" rx="8" fill="#fff3d9"/><text x="53" y="639" font-family="Arial,sans-serif" font-size="14" fill="#664900">ADC/umbral no es humedad volumétrica. LED activo en alto: confirmar módulo, polaridad y resistencias limitadoras.</text>
+</svg>

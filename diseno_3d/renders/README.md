@@ -1,3 +1,3 @@
-# Render / visualización
+# Render referencial
 
-En OpenSCAD abrir `../fusion360/caja_sensor_humedad.scad`, elegir `pieza="vista"`, pulsar F5. Se visualiza base, Arduino ilustrativo, tapa elevada y la sonda externa. Este modo NO es para imprimir.
+[Ver ensamble Leonardo](ensamble_leonardo_referencial.png) cuando finalice el flujo de GitHub Actions. Render creado desde OpenSCAD; no corresponde a fotografía del prototipo. El CAD muestra una tapa levantada para ver volúmenes internos aproximados.

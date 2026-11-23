@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="780" viewBox="0 0 1200 780">
+<rect width="1200" height="780" fill="#ffffff"/>
+<g font-family="Arial,sans-serif" fill="#172d28">
+<text x="65" y="58" font-size="31" font-weight="bold">Detector de humedad | Plano referencial Leonardo</text>
+<text x="65" y="90" font-size="18">Cotas en mm — NO validado contra la caja física. Modelo CAD OpenSCAD, no archivo Fusion 360.</text>
+</g>
+<g stroke="#204f42" fill="none" stroke-width="3">
+<rect x="150" y="190" width="520" height="410" rx="23"/><rect x="163" y="203" width="494" height="384" rx="14" stroke-dasharray="9 8"/>
+<rect x="215" y="260" width="343" height="267" rx="6" stroke="#2b71af" stroke-dasharray="9 8" fill="#e7f2fa"/>
+<circle cx="190" cy="230" r="12"/><circle cx="630" cy="230" r="12"/><circle cx="190" cy="560" r="12"/><circle cx="630" cy="560" r="12"/>
+<circle cx="600" cy="410" r="15" stroke="#c48b3f"/>
+<path d="M150 171v-36h520v36M131 190H95V600h36"/>
+<rect x="810" y="285" width="254" height="190" rx="12"/>
+<path d="M810 490h254"/><path d="M810 530h254" stroke-dasharray="7 9"/>
+<path d="M810 255v-22h254v22"/>
+</g>
+<g font-family="Arial,sans-serif" fill="#172d28">
+<text x="370" y="124" text-anchor="middle" font-size="22">104</text>
+<text x="75" y="400" transform="rotate(-90 75 400)" text-anchor="middle" font-size="22">82</text>
+<text x="287" y="380" font-size="26" fill="#235b86">Leonardo</text>
+<text x="263" y="413" font-size="17" fill="#235b86">68,6 × 53,4 (referencia)</text>
+<text x="624" y="415" font-size="15" fill="#995d16">LED Ø6,2</text>
+<text x="824" y="277" font-size="20">Vista lateral</text>
+<text x="840" y="565" font-size="21">38 base + 3 tapa = 41</text>
+<text x="840" y="602" font-size="18">Pared 2,6 | Piso 3</text>
+<text x="840" y="632" font-size="18">Tolerancia CAD inicial 0,25</text>
+<text x="150" y="654" font-size="17">Vista superior · 4 fijaciones nominales de tapa</text>
+</g>
+<g font-family="Arial,sans-serif" fill="#8b2c19">
+<text x="70" y="722" font-weight="bold" font-size="17">ADVERTENCIA: medir tornillos, PCB, USB y LED reales; verificar interferencias y diferenciar de la caja ya impresa.</text>
+<text x="70" y="749" font-size="16">Archivo paramétrico de referencia: diseno_3d/fusion360/caja_sensor_leonardo.scad</text>
+</g>
+</svg>

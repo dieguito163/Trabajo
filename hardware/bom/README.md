@@ -1,11 +1,12 @@
-# Lista preliminar de materiales
+# BOM | detector de humedad Leonardo, sin protoboard
 
-| Componente | Cantidad | Notas |
-|---|---:|---|
-| Arduino UNO/clon | 1 | Dimensiones y puertos por validar |
-| Sensor capacitivo de humedad v1.2 | 1 | Sonda fuera de la carcasa |
-| Módulo LED **RGB** | 1 | Tres canales de color; confirmar tipo ánodo/cátodo, resistencias y diámetro de placa |
-| Cables Dupont | Varios | Longitudes por confirmar |
-| Tornillos M2–M2.5 | Hasta 4 | Fijación UNO, verificar diámetro |
-| Tornillos M3 | 4 | Cierre tapa, verificar longitudes |
-| Caja y tapa impresas | 1 + 1 | Archivos STL generables |
+**Versión vigente:** [BOM_leonardo.csv](BOM_leonardo.csv), compatible con Excel y Google Sheets. La planilla histórica **bom completo 2.0.xlsx** y el PDF previo permanecen disponibles **solo como evidencia de la versión anterior**; pueden contener Arduino UNO/protoboard y no deben presentarse como BOM vigente.
+
+Para completar el costo total:
+1. Confirmar el **modelo y precio real** del Arduino Leonardo.
+2. Confirmar modelo del LED RGB: si incluye resistencias, eliminar el ítem condicional de resistencias externas.
+3. Confirmar si los cables y el USB ya estaban incluidos en el precio de componentes.
+4. Registrar valores en CLP por unidad y multiplicar por cantidad.
+5. Registrar el costo total del proyecto, excluyendo o incluyendo mano de obra de manera explícita.
+
+Los precios están **intencionalmente en blanco**: no contamos con facturas o cotizaciones de esta versión. No se reemplazan por costos inventados. La pauta exige costo unitario y costo total: **la BOM no estará terminada hasta completar este paso**.

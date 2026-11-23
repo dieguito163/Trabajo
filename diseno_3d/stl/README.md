@@ -1,13 +1,10 @@
-# Cómo abrir las figuras 3D, sin buscar «Artifacts»
+# STL imprimibles
 
-Cuando estén generados, GitHub permite **abrir directamente los STL**, girarlos y acercarlos desde el navegador:
+**Modelo actual referencial Leonardo (generación automática):**
+- [Base Leonardo](base_leonardo_referencial.stl)
+- [Tapa Leonardo](tapa_leonardo_referencial.stl)
+- [Probeta Leonardo](probeta_leonardo_referencial.stl)
 
-- [**Ver la base 3D**](base_arduino_uno.stl)
-- [**Ver la tapa 3D**](tapa_led.stl)
-- [**Ver probeta de prueba**](probeta_ajuste.stl)
+Los archivos anteriores **base_arduino_uno.stl**, **tapa_led.stl** y **probeta_ajuste.stl** son históricos de la versión UNO. No asumir que sus orificios coinciden con el nuevo Leonardo. Si los nuevos archivos no aparecen, revisar el flujo de GitHub Actions.
 
-Haz clic en la pieza para verla. También puedes descargar el `.stl` mediante **Download raw file**, o abrirlo en [3DViewer.net](https://3dviewer.net/), Cura o Bambu Studio.
-
-Los tres STL se generan automáticamente desde el archivo CAD `.scad` mediante GitHub Actions y se **guardan dentro de esta carpeta del repositorio**, sin depender de la sección temporal «Artifacts». Si no aparecen, abre [Actions](https://github.com/dieguito163/Trabajo/actions) y revisa la ejecución «Generar STL imprimibles».
-
-**Advertencia:** estos archivos son un primer prototipo. Verificar encaje real, diámetro del LED RGB y distancias USB/cables antes de imprimir una versión final.
+Los STL actuales son aproximaciones paramétricas; **verificar encaje y tolerancias físicas antes de imprimir nuevamente**.

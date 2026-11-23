@@ -1,23 +1,39 @@
-# Diseño 3D — caja para detector de humedad
+# Diseño 3D | detector de humedad
 
-**Carcasa preliminar** para Arduino UNO R3/clon de la fotografía, sensor capacitivo v1.2 y LED RGB (un solo módulo luminoso con tres canales).
-El Arduino queda dentro; la sonda se coloca en la tierra y su cable atraviesa una ranura lateral. El LED RGB se asoma a través de la tapa; su control se realiza por tres pines PWM (D11, D10, D9).
+## Versión actual y archivos
 
-## Archivos
-- [CAD editable OpenSCAD](fusion360/caja_sensor_humedad.scad) — **no es un .f3d nativo de Fusion 360**.
-- [Plano técnico SVG](planos/plano_caja.svg).
-- **[Abrir y girar la base 3D](stl/base_arduino_uno.stl)** o **[abrir la tapa 3D](stl/tapa_led.stl)** directamente en GitHub.
-- [Carpeta STL](stl/), archivos generados automáticamente por GitHub Actions y disponibles para descargar sin «Artifacts».
-- [Vista ilustrativa](renders/).
+- [CAD paramétrico Leonardo (OpenSCAD)](fusion360/caja_sensor_leonardo.scad) — base, tapa, probeta y vista con volúmenes representativos de Leonardo, LED y sonda.
+- [Plano Leonardo (SVG)](planos/plano_leonardo.svg) — cotas **nominales**. La automatización intenta exportarlo también a PDF.
+- [STL y referencias](stl/README.md) — generados automáticamente por GitHub Actions desde el CAD Leonardo al llegar a main.
+- [Renders](renders/README.md) — render referencial generado a partir del CAD, **no fotografía**.
+- [Fotografías reales](../hardware/fotos/README.md) — evidencia de la carcasa ensamblada.
 
-## Medidas nominales (mm)
-Caja: 104 × 82 × 41 (38 base + 3 tapa); pared 2,6; piso 3; postes de 6 para Arduino; paso LED Ø 6,2; cuatro tornillos M3 en tapa; agujeros guía UNO Ø 2,2 aproximados. Cotas provisionales y tolerancia inicial 0,25 mm.
+La versión anterior **caja_sensor_humedad.scad** y los STL **base_arduino_uno.stl** son históricos; no deben identificarse como el CAD final del Leonardo.
 
-## Cómo imprimir
-1. En OpenSCAD abrir el archivo .scad, cambiar `pieza="vista"` por `"base"`, pulsar F6 y exportar STL. Repetir con `"tapa"` y `"calibracion"`.
-2. También puedes abrir directamente los enlaces STL de esta página en GitHub, sin instalar programas. El proceso automático deja los STL en el repositorio y además adjunta una copia ZIP en Actions.
-3. Importar STL a Cura, PrusaSlicer o Bambu Studio en milímetros. PLA interior / PETG ambiente húmedo, 0,2 mm capa, 3 perímetros, 15–25 % infill.
-4. Imprimir **primero** la probeta de calibración: comprobar tornillos y LED.
-5. Medir puertos y alturas; ajustar parámetros; imprimir carcasa y tapa.
+## Parámetros nominales del archivo Leonardo
 
-**IMPORTANTE:** La foto no permite determinar medidas exactas. El módulo LED pequeño no tiene soporte interno específico; se debe medir antes de fijarlo. La caja no protege contra agua directa. No se ha verificado el ensamble físico. El modelo muestra el Arduino en modo ilustrativo `vista`; solo `base`/`tapa` son piezas imprimibles.
+| Parámetro | Valor referencial |
+|---|---|
+| Dimensiones de caja | 104 × 82 × 41 mm (38 base + 3 tapa) |
+| Pared lateral | 2,6 mm |
+| Piso | 3 mm |
+| LED frontal | Agujero Ø6,2 mm |
+| Placa Leonardo | Volumen 68,6 × 53,4 × 1,6 mm |
+| Tolerancia inicial CAD | 0,25 mm |
+| Montaje tapa | 4 tornillos modelados |
+
+Se reutilizó una distribución **referencial** de orificios tipo UNO/Leonardo del proyecto anterior. **No se han medido los centros reales del Leonardo instalado**. Las fotografías exteriores muestran una carcasa atornillada, pero no establecen las dimensiones ni garantizan que el archivo CAD encaje exactamente con la pieza ya impresa. Verificar también el número real y posición de tornillos.
+
+## Generar e inspeccionar
+
+En OpenSCAD abrir el CAD Leonardo, seleccionar una pieza cambiando la variable **pieza**, ejecutar **F6** y exportar como STL. Para el ensamble visual usar **pieza="vista"**; allí se muestran volúmenes aproximados del Leonardo, módulo RGB y sonda, con tapa separada para ver el interior.
+
+El flujo [Generar STL](../.github/workflows/generar-stl.yml) crea modelos STL, render referencial y PDF del plano en GitHub tras incorporar los cambios a la rama principal.
+
+## Requisito de Fusion 360
+
+La pauta solicita un ensamble **Fusion 360 nativo .f3d o .f3z** con representación de componentes internos y planos. **Este archivo NO existe todavía en el repositorio y no sería correcto renombrar un STL como .f3d.** El equipo debe montar el gemelo en Fusion 360 y exportarlo, verificando tamaños y accesos reales.
+
+## Reparabilidad y material
+
+Carcasa desmontable con tornillos; desconectar USB antes de abrir. PLA o PETG como ejemplos de materiales de impresión, sin afirmar impermeabilidad. Mantener la electrónica y conectores secos. Revisar tolerancias, alivio de tensión del cable y fijación del módulo LED.
