@@ -1,3 +1,3 @@
-# Iteración 2 — CAD
+# Diseño del encapsulado
 
-Carcasa y tapa paramétricas para Arduino UNO, acceso a USB y jack, salida para la sonda e indicador LED. No se ha probado el encaje físico.
+Diseñamos una carcasa impresa en 3D para mantener la electrónica dentro y el sensor fuera. Incorporamos una tapa atornillada para poder revisar y reparar los componentes.

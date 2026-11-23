@@ -1,35 +1,28 @@
-# Calibración y lógica del detector
+# Calibración del sensor y estados del LED
 
-## Configuración implementada
+En nuestro detector utilizamos el sensor capacitivo conectado al pin A0 del Arduino Leonardo. El código toma una lectura aproximadamente cada segundo y calcula un índice relativo de humedad a partir de dos referencias.
 
-- **Placa:** Arduino Leonardo.
-- **Sensor capacitivo:** lectura analógica en A0, escala del ADC 0 a 1023.
-- **LED RGB:** rojo D9, verde D10, azul D11 (PWM), siempre que sea compatible con salidas activas en alto.
-- **Calibración suministrada por el equipo:** aire = 892 y agua = 350.
-- **Frecuencia nominal:** una lectura por segundo, mediante delay(1000) más tiempo de ejecución.
-- **Salida serial:** 9600 baudios.
+| Condición de referencia | Lectura analógica |
+|---|---:|
+| Sensor al aire | 892 |
+| Sensor en agua | 350 |
 
-## ¿Qué significa 0–100 %?
+El Arduino realiza el cálculo con \`map(lecturaCruda, 892, 350, 0, 100)\` y \`constrain(porcentaje, 0, 100)\`. El valor aumenta cuando la lectura cruda disminuye hacia la referencia húmeda.
 
-La conversión **map(lecturaCruda, 892, 350, 0, 100)** corresponde a una **escala relativa** definida por los dos puntos elegidos. El 100 % es la referencia sumergida en agua, **no un contenido volumétrico real de 100 % en el sustrato**. Fuera de ese rango se limita el valor con **constrain**.
+## Colores
 
-## Tabla de decisiones
-
-| Intervalo | Nombre serial | Color PWM (R,G,B) |
+| Índice relativo | Estado | Color RGB |
 |---|---|---|
-| 0–19 | Seco | 255, 0, 0 |
-| 20–39 | Humedo | 0, 255, 0 |
-| 40–100 | Muy humedo | 0, 0, 255 |
+| 0–19 % | Seco | 255, 0, 0 |
+| 20–39 % | Húmedo | 0, 255, 0 |
+| 40–100 % | Muy húmedo | 0, 0, 255 |
 
-Estos umbrales son de la versión entregada por el equipo; **no han sido validados para una especie o sustrato determinados**. Debe contrastarse visualmente la condición del suelo y documentar los resultados.
+Para obtener estos colores utilizamos D9 (rojo), D10 (verde) y D11 (azul). El código asume que el módulo RGB es compatible con intensidad activa en alto.
 
-## Propuesta de validación física (no representa resultados ejecutados)
+## Ajuste de calibración
 
-1. Identificar fecha, tipo de suelo, planta, profundidad de inserción y alimentación.
-2. Tomar 10 lecturas estabilizadas con la sonda al aire, procurando no tocar los contactos.
-3. Tomar 10 con sonda en agua **sin mojar la electrónica** y anotar dispersión.
-4. Tomar 10 en tierra seca y 10 en tierra húmeda, a igual profundidad.
-5. Comparar media, variación y tiempo de respuesta, registrando los tres colores observados.
-6. Usar los resultados para decidir si se mantiene o cambia la calibración/umbrales.
+En nuestras pruebas iniciales el dispositivo funciona en general, pero necesitamos mejorar la calibración para el sustrato que utilizamos. Repetiremos lecturas estabilizadas al aire, en tierra seca y en tierra húmeda, manteniendo la misma profundidad y tomando varias muestras de cada condición.
 
-Consultar [protocolo completo](../../testing/protocolo_leonardo.md). Al conectar el sistema, la **fuente de verdad** sobre las entradas del LED debe ser el esquema real (revisado con multímetro), no el color del cable por intuición.
+Compararemos promedios y dispersión para evaluar si los puntos de referencia y los umbrales de 20 % y 40 % representan correctamente el estado de la tierra. Este índice es relativo y no corresponde automáticamente a una medición de humedad volumétrica.
+
+[Protocolo de pruebas](../../testing/protocolo_leonardo.md).

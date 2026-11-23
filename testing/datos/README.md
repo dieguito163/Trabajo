@@ -1,10 +1,7 @@
-# Datos experimentales
+# Mediciones de humedad
 
-El capturador real escribe las muestras en **lecturas.csv** cuando se ejecuta con el Arduino Leonardo conectado. Cada registro contiene fecha/hora, lectura ADC, porcentaje relativo de calibración y estado.
+Guardamos nuestras mediciones del Arduino Leonardo en `lecturas.csv`. Cada registro incluye la hora, la lectura analógica, el índice calculado y el estado del LED.
 
-Para una entrega con pruebas documentadas, subir el archivo de una sesión real aquí y acompañarlo con el contexto experimental y una captura del panel.
+Podemos complementar estos registros con la [plantilla](plantilla_validacion.csv), donde anotamos el tipo de tierra, su estado y las observaciones durante la calibración.
 
-- **plantilla_validacion.csv**: formulario manual para condiciones y observaciones.
-- **plantilla.csv**: plantilla anterior, no es evidencia de pruebas.
-
-**No se han agregado datos simulados como si fueran mediciones.** Los tests automáticos del parser solo prueban el formato de comunicación.
+Para analizar una sesión ejecutamos `python testing/analizar_datos.py --archivo testing/datos/lecturas.csv`. Los resultados dependen de las lecturas que registremos con el prototipo físico.

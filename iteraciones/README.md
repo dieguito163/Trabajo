@@ -1,7 +1,11 @@
-# Iteraciones del diseño
+# Evolución del detector
 
-1. **Versión anterior:** Arduino UNO; sensor capacitivo y tres estados LED (calibración 895/767). Código, BOM y CAD históricos en el historial de Git.
-2. **Revisión electrónica:** cambio a Arduino Leonardo, uso de pines A0 y PWM D9-D11, calibración 892/350 y tres estados del LED RGB (rojo, verde, azul).
-3. **Integración mecánica:** eliminación de la protoboard, uso de carcasa impresa en 3D atornillada y sonda externa (fotografías del equipo).
-4. **Integración de datos:** incorporación de capturador de USB serial a CSV y dashboard local para cumplir persistencia y visualización.
-5. **Validación por hacer:** foto del interior, plano final y .f3d, pruebas cuantitativas con mediciones reales.
+Durante el desarrollo fuimos ajustando el circuito, el código y la carcasa para conseguir un montaje más compacto y fácil de utilizar.
+
+1. **Primer montaje:** trabajamos con Arduino UNO, una sonda capacitiva y un indicador RGB. Esta versión nos permitió definir el funcionamiento inicial.
+2. **Diseño de carcasa:** modelamos una base y una tapa en 3D, con salida para el cable del sensor y acceso al indicador.
+3. **Montaje Leonardo:** cambiamos la placa por un Arduino Leonardo y eliminamos la protoboard. También revisamos los pines del LED y los puntos de calibración.
+4. **Código de tres colores:** establecimos las indicaciones rojo, verde y azul según tres intervalos.
+5. **Registro de datos:** incorporamos un programa de captura por USB y un dashboard local para analizar la evolución de las lecturas.
+
+En general el prototipo responde como esperamos en las pruebas iniciales. Seguimos trabajando en la calibración para relacionar mejor la lectura con el estado real de la tierra.

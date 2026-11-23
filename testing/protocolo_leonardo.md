@@ -1,48 +1,63 @@
-# Protocolo de pruebas y validación | Arduino Leonardo
+# Pruebas del detector de humedad
 
-**Situación:** definimos este procedimiento y sus criterios antes de medir; **todavía no son resultados experimentales**. Los registros deben obtenerse con el prototipo físico, y las pruebas del parser son una verificación de software, no una medición del suelo.
+## Objetivo
 
-## Pregunta a validar
+Nuestro objetivo es comprobar que el sensor detecta cambios asociados a la humedad del suelo y que el Arduino Leonardo comunica el resultado mediante el LED RGB. También queremos comprobar que podemos registrar el valor en el computador y analizar su evolución.
 
-¿El sensor y el indicador LED permiten distinguir condiciones de humedad del sustrato y registrar los datos reales de manera que una persona pueda evaluar el riego?
+## Funcionamiento observado
 
-## Condiciones controladas
+En nuestras primeras pruebas **el dispositivo funciona en general**. Hemos podido utilizar el sensor y el indicador luminoso, pero la **calibración todavía necesita ajustes**. Por ahora utilizamos una referencia de 892 al aire y 350 en agua; estos valores nos permiten calcular un índice, aunque necesitamos relacionarlo mejor con condiciones de suelo seco y húmedo.
 
-Registrar: fecha, tipo de suelo, cantidad de agua aplicada, profundidad de inserción, tiempo de espera para estabilizar, modelo del sensor, alimentación USB, versión del firmware y cualquier desconexión. Mantener la electrónica fuera de agua o tierra húmeda.
+## Condiciones de prueba
 
-## Pruebas y criterios
+Para comparar las lecturas trabajaremos con el mismo sensor, el mismo sustrato y una profundidad de inserción constante. Registraremos la fecha, el estado del suelo, las condiciones de la muestra y las observaciones durante la prueba. Evitaremos que el agua alcance el conector o la electrónica de la sonda.
 
-| ID | Objetivo | Procedimiento | Criterio de éxito | Evidencia exigida |
-|---|---|---|---|---|
-| P1 | Lectura continua | Registrar 5 min con sensor fijo | ~300 mediciones a 1/s, sin desconexiones; cuantificar diferencia frente a ideal | CSV real y conteo |
-| P2 | Respuesta a humedad | Medir 10 muestras en aire, 10 en sustrato seco y 10 en húmedo | Lecturas reproducibles y cambio consistente al humedecer; informar medias y desviación | Tabla y gráfico |
-| P3 | Tres colores | Llevar la lectura a condiciones que crucen 20% y 40% sin mojar la electrónica | Rojo, verde y azul coinciden con el firmware | Fotos o registro de observación |
-| P4 | Persistencia | Capturar 2 min; cerrar registrador; abrir CSV y dashboard | El histórico sigue consultable después de cerrar capturador | Captura CSV + dashboard |
-| P5 | Actualización del panel | Con capturador y panel abiertos, variar condición del sensor | Se muestra nueva lectura e historial dentro de algunos segundos; medir latencia real | Video de demo y captura con reloj |
-| P6 | Reparabilidad | Apagar, retirar los tornillos y abrir tapa | Acceso a Arduino y conexiones sin romper carcasa | Fotos del interior |
-| P7 | Seguridad básica | Inspección desenergizada de cables y conexiones | Sin conductores sueltos, polaridades y resistencias correctas | Foto y lista de verificación |
+## Procedimiento
 
-El criterio de 300 muestras en P1 es un **objetivo nominal** (delay de 1 s + tiempo de proceso). No debe reportarse como cantidad observada sin contar el CSV.
+1. Encendemos el Arduino Leonardo y verificamos que el sensor entregue una lectura analógica.
+2. Dejamos el sensor en una condición estable y registramos las lecturas durante unos segundos.
+3. Repetimos la prueba con el sensor al aire, en suelo seco y en suelo húmedo, sin cambiar la profundidad entre las muestras de suelo.
+4. Comprobamos que el LED indique **rojo (0–19 %), verde (20–39 %) o azul (40–100 %)** según la lectura.
+5. Conectamos el Arduino al computador por USB y guardamos las mediciones en CSV.
+6. Abrimos el dashboard y observamos el valor actual, el promedio y la gráfica histórica.
+7. Repetimos las mediciones para comprobar si los valores son consistentes o fluctúan cerca de los umbrales.
 
-## Pasos de captura y cálculo
+## Criterios de evaluación
 
-1. Conectar el Leonardo, elegir puerto, subir el firmware y cerrar Monitor Serie.
-2. Iniciar **python software/dashboard/lector_serial.py --puerto COM5** (ajustar COM).
-3. Abrir Streamlit por separado y confirmar que el archivo CSV se actualiza.
-4. Registrar los datos bajo condiciones repetibles y anotar observaciones en [planilla](datos/plantilla_validacion.csv).
-5. Con Python o Excel calcular: N, media, desviación estándar, mínimo/máximo, tasa de captura N/tiempo y latencia respecto a cambios de condición observados.
-6. Mostrar al evaluador el CSV y la gráfica **reales**. No utilizar las cadenas sintéticas del test de parser como mediciones.
+| Prueba | Criterio |
+|---|---|
+| Lectura del sensor | Obtenemos mediciones ADC dentro de 0 a 1023 |
+| Cambios de humedad | La lectura cambia de forma consistente cuando modificamos la humedad |
+| Colores | Rojo para 0–19 %, verde para 20–39 %, azul desde 40 % |
+| Registro | El CSV conserva fecha, valor crudo, índice y estado |
+| Dashboard | Podemos observar el histórico, el promedio y los cambios en el tiempo |
+| Estabilidad | Calculamos variación entre lecturas en una condición fija |
+| Reparación | Podemos abrir la tapa sin romper la carcasa y acceder al circuito |
 
-## Falla y mejora a investigar
+## Calibración
 
-En nuestra primera versión usamos Arduino UNO y una calibración diferente (895/767); al migrar a Leonardo se requiere actualizar pines, código, documentación y CAD. Esto es una **iteración de diseño identificada**, no una falla de ensayo cuantificada.
+Necesitamos completar la calibración fina usando nuestro tipo de tierra. Para cada condición tomaremos **10 mediciones** una vez que la lectura se estabilice. Calcularemos el promedio y la desviación estándar de cada grupo. La comparación entre tierra seca y tierra húmeda permitirá comprobar si las referencias actuales son apropiadas.
 
-Si los datos fluctúan mucho cerca de los umbrales, **posible** mejora: filtro de promedio móvil o histéresis, pero solo implementarla tras medir la variación y sus consecuencias sobre la latencia.
+El índice calculado con \`map(lectura, 892, 350, 0, 100)\` sirve para comparar condiciones, pero **no equivale directamente al porcentaje de agua contenido en el suelo**.
 
-## Conexión con el problema original
+## Registro y análisis
 
-La señal analógica aislada no explica al usuario qué hacer. Se transforma en un estado LED y en una serie temporal: la gráfica permite conocer si el sustrato está cambiando hacia un estado relativamente más seco o más húmedo, y recomendar la revisión del riego. **No sustituye** el criterio por especie de planta ni demuestra un ahorro de agua sin un experimento de comparación.
+Guardamos los registros en \`testing/datos/lecturas.csv\`. Podemos generar un resumen estadístico con:
 
-## Resultados
+~~~bash
+python testing/analizar_datos.py --archivo testing/datos/lecturas.csv
+~~~
 
-**A completar con datos reales:** [plantilla de validación](datos/plantilla_validacion.csv). Adjuntar CSV registrado por el sistema, fotos del interior, captura del dashboard y análisis de al menos un error real y su solución.
+El resumen incluye cantidad de registros, promedio, mínimo, máximo, dispersión, intervalo entre muestras y proporción de estados. Esos valores se calculan únicamente a partir de un CSV efectivamente registrado, no de datos ficticios.
+
+## Dificultades y mejoras
+
+Uno de nuestros cambios de diseño fue pasar de Arduino UNO a Leonardo y quitar la protoboard. Esto simplificó el montaje dentro de la caja, pero nos obligó a actualizar el código y revisar la distribución de pines.
+
+La **calibración** es la principal mejora que tenemos identificada. Repetiremos mediciones bajo condiciones controladas y ajustaremos los parámetros según los resultados. Si observamos cambios de color demasiado frecuentes cerca de 20 % o 40 %, evaluaremos un filtro o histéresis para estabilizar la indicación.
+
+## Relación con el problema
+
+Buscamos reconocer cuándo conviene revisar el riego de una planta. El prototipo transforma una lectura en una señal rápida por colores y el dashboard nos permite observar una tendencia. Estas funciones nos ayudan a tomar una decisión informada, siempre considerando las necesidades de cada planta y las limitaciones de calibración de nuestro sensor.
+
+[Resultados y análisis preliminar](reportes/resultados_preliminares.md) · [Registros](datos/)

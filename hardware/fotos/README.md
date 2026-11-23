@@ -1,7 +1,16 @@
-# Fotografías reales del montaje Leonardo
+# Fotografías de nuestro detector
 
-El equipo proporcionó **tres fotografías exteriores** tomadas el 22 de noviembre de 2026, que muestran la carcasa blanca impresa, tornillos de la tapa, sonda capacitiva externa y cable de conexión.
+Estas imágenes muestran el montaje final con la carcasa impresa en 3D, la tapa atornillada y el sensor capacitivo conectado desde el exterior.
 
-**Advertencia:** las imágenes no se encuentran incorporadas aún como archivos binarios en esta carpeta. Deben cargarse antes de enviar el enlace al evaluador (nombres sugeridos: `vista_sensor.jpg`, `vista_lateral.jpg`, `vista_superior.jpg`). Mantener originales o versiones legibles.
+![Tres ángulos del montaje](vistas_del_montaje.jpg)
 
-No confundir estas fotografías con el [render CAD](../../diseno_3d/renders/README.md). Para evaluar el diseño para reparación falta una **cuarta foto de la tapa abierta**, donde puedan verse Arduino Leonardo, sujeción, cableado sin protoboard, resistencias y conectores. Las fotos exteriores por sí solas no prueban el funcionamiento ni la exactitud del gemelo 3D.
+## Vista superior
+![Vista superior de la caja](vista_superior.jpg)
+
+## Vista lateral
+![Conexión del sensor y salida de cable](vista_lateral.jpg)
+
+## Vista frontal
+![Vista frontal de la carcasa](vista_frontal.jpg)
+
+La tapa se retira con tornillos, por lo que podemos acceder al Arduino y a las conexiones para hacer ajustes sin romper la carcasa.

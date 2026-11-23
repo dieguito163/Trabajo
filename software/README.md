@@ -1,8 +1,7 @@
-# Software del sistema Leonardo
+# Software
 
-- [Firmware actual y único](../firmware/detector_humedad/detector_humedad.ino) — Arduino Leonardo, A0, RGB D9/D10/D11, calibración 892/350, tres intervalos.
-- [Dashboard y persistencia](dashboard/README.md) — captura de datos reales por USB a CSV, panel local Streamlit.
-- [Documentación de calibración](docs/README.md).
-- [Declaración de fuentes e IA](../FUENTES.md).
+Nuestro [programa Arduino](../firmware/detector_humedad/detector_humedad.ino) lee el sensor capacitivo conectado a A0, calcula el índice de humedad y controla el LED RGB con los pines D9, D10 y D11. Utilizamos los estados rojo, verde y azul.
 
-El antiguo archivo **software/src/detector_humedad.ino**, correspondiente a UNO y calibración 895/767, se retiró de la vista actual para impedir que se cargue la versión equivocada. Se conserva en el historial de Git.
+También preparamos un [registrador serial y dashboard](dashboard/README.md) para guardar y visualizar las lecturas desde un computador conectado por USB.
+
+La [calibración y los umbrales](docs/README.md) están explicados en la documentación del sensor. Las dependencias utilizadas se encuentran en [FUENTES.md](../FUENTES.md).

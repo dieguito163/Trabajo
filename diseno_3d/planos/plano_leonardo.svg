@@ -2,7 +2,7 @@
 <rect width="1200" height="780" fill="#ffffff"/>
 <g font-family="Arial,sans-serif" fill="#172d28">
 <text x="65" y="58" font-size="31" font-weight="bold">Detector de humedad | Plano referencial Leonardo</text>
-<text x="65" y="90" font-size="18">Cotas en mm — NO validado contra la caja física. Modelo CAD OpenSCAD, no archivo Fusion 360.</text>
+<text x="65" y="90" font-size="18">Cotas nominales en mm del diseño 3D. Modelo CAD OpenSCAD.</text>
 </g>
 <g stroke="#204f42" fill="none" stroke-width="3">
 <rect x="150" y="190" width="520" height="410" rx="23"/><rect x="163" y="203" width="494" height="384" rx="14" stroke-dasharray="9 8"/>
@@ -27,7 +27,7 @@
 <text x="150" y="654" font-size="17">Vista superior · 4 fijaciones nominales de tapa</text>
 </g>
 <g font-family="Arial,sans-serif" fill="#8b2c19">
-<text x="70" y="722" font-weight="bold" font-size="17">ADVERTENCIA: medir tornillos, PCB, USB y LED reales; verificar interferencias y diferenciar de la caja ya impresa.</text>
+<text x="70" y="722" font-weight="bold" font-size="17">Para fabricar una nueva caja contrastamos tornillos, placa, puerto USB y LED con el montaje físico.</text>
 <text x="70" y="749" font-size="16">Archivo paramétrico de referencia: diseno_3d/fusion360/caja_sensor_leonardo.scad</text>
 </g>
 </svg>

@@ -1,0 +1,53 @@
+name: Preparar fotos del montaje
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "hardware/fotos/vistas_del_montaje.jpg"
+      - ".github/workflows/generar-fotos.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  generar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Preparar tres vistas
+        run: |
+          python -m pip install pillow
+          python - <<'PY'
+          from PIL import Image
+          from pathlib import Path
+          root = Path("hardware/fotos")
+          imagen = Image.open(root / "vistas_del_montaje.jpg").convert("RGB")
+          ancho,alto = imagen.size
+          cortes = [
+            ("vista_superior.jpg", 0, ancho//3),
+            ("vista_lateral.jpg", ancho//3, ancho*2//3),
+            ("vista_frontal.jpg", ancho*2//3, ancho),
+          ]
+          for nombre,x0,x1 in cortes:
+              imagen.crop((x0,0,x1,alto)).save(root / nombre, "JPEG", quality=92, optimize=True)
+              assert (root / nombre).stat().st_size > 1000
+              print("Imagen creada:", nombre)
+          PY
+      - name: Publicar fotografías en el repositorio
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add hardware/fotos/vista_*.jpg
+          if ! git diff --cached --quiet; then
+            git commit -m "Separar tres vistas reales del montaje [skip ci]"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
