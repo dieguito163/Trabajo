@@ -36,7 +36,7 @@ Nuestro diseño se alimenta desde USB cuando utilizamos el registro de datos. No
 
 Nuestro código utiliza salidas PWM activas en alto. Para reproducir el montaje necesitamos revisar el orden de terminales del LED, su tipo de común y las resistencias limitadoras que corresponden al módulo instalado.
 
-[Esquema y conexiones](esquemas/README.md) · [Lista de materiales](bom/README.md) · [Fotografías](fotos/README.md)
+[Esquema y conexiones](esquemas/README.md) · [Esquemático en PDF](esquemas/esquematico_leonardo.pdf) · [Lista de materiales](bom/README.md) · [Fotografías](fotos/README.md)
 
 ## Reparación
 

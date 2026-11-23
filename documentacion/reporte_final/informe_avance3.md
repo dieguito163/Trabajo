@@ -59,9 +59,9 @@ Utilizamos una frecuencia cercana a **1 Hz**, suficiente para seguir cambios que
 
 Tomamos **892** como lectura de referencia al aire y **350** como referencia en agua. Con estos valores, el programa realiza una interpolación lineal:
 
-\[
+$
 h_{\text{relativa}}=\operatorname{limitar}_{[0,100]}\left(\frac{892-\text{ADC}}{892-350}\times100\right)
-\]
+$
 
 En Arduino implementamos este cálculo mediante \`map()\` y \`constrain()\`. El valor mostrado es un **índice relativo**, no una medición certificada de humedad volumétrica en porcentaje.
 

@@ -8,6 +8,7 @@ on:
       - "diseno_3d/fusion360/caja_sensor_leonardo.scad"
       - "diseno_3d/fusion360/generar_ensamble_step.py"
       - "diseno_3d/planos/plano_leonardo_multivista.svg"
+      - "hardware/esquemas/esquematico_detallado.svg"
       - ".github/workflows/generar-stl.yml"
 
 permissions:
@@ -41,18 +42,20 @@ jobs:
           xvfb-run -a openscad -o diseno_3d/renders/ensamble_explosionado.png --imgsize=1200,800 --autocenter --viewall --colorscheme=Tomorrow -D 'pieza="explosion"' "$CAD"
           rsvg-convert -f pdf -o diseno_3d/planos/plano_leonardo_referencial.pdf diseno_3d/planos/plano_leonardo.svg
           rsvg-convert -f pdf -o diseno_3d/planos/plano_leonardo_multivista.pdf diseno_3d/planos/plano_leonardo_multivista.svg
+          rsvg-convert -f pdf -o hardware/esquemas/esquematico_leonardo.pdf hardware/esquemas/esquematico_detallado.svg
           python diseno_3d/fusion360/generar_ensamble_step.py
           test -s diseno_3d/fusion360/ensamble_leonardo.step
           test -s diseno_3d/renders/carcasa_exterior.png
           test -s diseno_3d/renders/carcasa_interior.png
           test -s diseno_3d/renders/ensamble_explosionado.png
           test -s diseno_3d/planos/plano_leonardo_multivista.pdf
+          test -s hardware/esquemas/esquematico_leonardo.pdf
       - name: Guardar modelos y planos en GitHub
         if: github.ref == 'refs/heads/main'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add diseno_3d/stl/*leonardo* diseno_3d/renders/*.png diseno_3d/planos/*.pdf diseno_3d/fusion360/ensamble_leonardo.step
+          git add diseno_3d/stl/*leonardo* diseno_3d/renders/*.png diseno_3d/planos/*.pdf diseno_3d/fusion360/ensamble_leonardo.step hardware/esquemas/esquematico_leonardo.pdf
           if ! git diff --cached --quiet; then
             git commit -m "Publicar ensamble STEP, renders y planos Leonardo [skip ci]"
             git pull --rebase origin main
@@ -66,3 +69,4 @@ jobs:
             diseno_3d/renders/*.png
             diseno_3d/planos/*.pdf
             diseno_3d/fusion360/ensamble_leonardo.step
+            hardware/esquemas/esquematico_leonardo.pdf
