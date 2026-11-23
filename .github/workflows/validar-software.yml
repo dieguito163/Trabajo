@@ -1,31 +1,32 @@
-name: Validar firmware y parser
+name: Validar firmware y herramientas
 
 on:
   push:
-    branches: [main, entrega-avance3-leonardo-2026]
+    branches: [main, documentacion-final-tres-colores]
   pull_request:
 
 permissions:
   contents: read
 
 jobs:
-  parser:
+  pruebas_python:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Pruebas de interpretación de tramas seriales
+      - name: Validar la sintaxis
+        run: |
+          python -m py_compile software/dashboard/lector_serial.py software/dashboard/panel.py testing/analizar_datos.py
+      - name: Pruebas automáticas de lógica (no son mediciones reales)
         run: python -m unittest discover -s testing -p "test_*.py" -v
-      - name: Sintaxis de herramientas Python
-        run: python -m py_compile software/dashboard/lector_serial.py software/dashboard/panel.py
   arduino:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: arduino/setup-arduino-cli@v2
-      - name: Instalar core y compilar para Leonardo
+      - name: Instalar core AVR y compilar para Leonardo
         run: |
           arduino-cli core update-index
           arduino-cli core install arduino:avr

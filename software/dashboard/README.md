@@ -1,57 +1,60 @@
-# Dashboard y registro de datos del Arduino Leonardo
+# Registro de datos y dashboard
 
-El **Leonardo no tiene WiFi integrado**. Se usa su conexión **USB serial a 9600 baudios** para enviar al computador las lecturas del sensor cada ~1 segundo. El registro las escribe en **testing/datos/lecturas.csv** y Streamlit las presenta en una página web **local** con histórico persistente.
+En nuestro proyecto utilizamos el puerto USB del Arduino Leonardo para enviar al computador los datos del sensor de humedad. Creamos un registrador serial que guarda cada lectura en un CSV y un dashboard en Streamlit que nos permite observar el estado actual y el histórico.
 
-## Instalación (Windows)
+## Instalación en Windows
 
-1. Conectar el Arduino Leonardo con un **cable USB de datos**, cargar firmware/detector_humedad/detector_humedad.ino y comprobar una lectura por Monitor Serie a 9600.
-2. Cerrar el Monitor Serie antes de ejecutar Python, pues **solo un programa puede abrir el puerto a la vez**.
-3. Instalar Python 3.10+ y abrir PowerShell en la raíz del repositorio.
-4. Ejecutar:
+1. Conectamos el Leonardo por USB y cargamos el [firmware](../../firmware/detector_humedad/detector_humedad.ino).
+2. Abrimos el Monitor Serie a **9600 baudios** para comprobar la salida y luego lo cerramos.
+3. Instalamos Python 3.10 o superior y abrimos PowerShell en la carpeta del proyecto.
+4. Instalamos las dependencias y buscamos el puerto:
 
 ~~~powershell
 py -m pip install -r software/dashboard/requirements.txt
 py -m serial.tools.list_ports
 ~~~
 
-5. Buscar el puerto (por ejemplo COM5) y, **en la primera terminal**:
+5. Iniciamos el registro en una terminal, reemplazando **COM5** por el puerto de nuestro Leonardo:
 
 ~~~powershell
 py software/dashboard/lector_serial.py --puerto COM5
 ~~~
 
-6. Sin cerrar el registrador, **en otra terminal**:
+6. Abrimos otra terminal y ejecutamos:
 
 ~~~powershell
 py -m streamlit run software/dashboard/panel.py
 ~~~
 
-7. Abrir la dirección local indicada por Streamlit, comúnmente http://localhost:8501.
+7. Entramos a la dirección local indicada por Streamlit, normalmente **http://localhost:8501**.
 
-En Linux reemplazar el puerto por /dev/ttyACM0, si corresponde. Para detener, Ctrl+C en el capturador. El CSV queda guardado en disco. No se crean mediciones de ejemplo.
+El puerto serial solo puede estar abierto en una aplicación a la vez. El registrador conserva las muestras en \`testing/datos/lecturas.csv\`, por lo que podemos volver a revisar registros anteriores incluso después de cerrar el programa.
 
-## Datos almacenados
+## Datos guardados
 
-| Columna CSV | Significado |
+| Columna | Qué registramos |
 |---|---|
-| fecha_hora | Hora local del PC con zona horaria |
-| lectura_adc | Valor crudo leído en A0 (0 a 1023) |
-| humedad_pct | Índice relativo derivado de la calibración 892/350 |
+| fecha_hora | Fecha y hora de la lectura |
+| lectura_adc | Valor analógico del sensor |
+| humedad_pct | Índice calculado con la calibración 892/350 |
 | estado | Seco / Humedo / Muy humedo |
 
-El lector descarta líneas incompletas, fuera de rango o incoherentes con el estado y escribe en disco después de cada muestra válida. El dashboard no requiere que el Arduino esté encendido para **consultar mediciones ya almacenadas**.
+En el dashboard mostramos índice actual, estado, promedio, cantidad de muestras, mínimo, máximo y dos gráficas. El panel se actualiza leyendo el CSV aproximadamente cada dos segundos.
 
-## Si falla
+## Interpretación
 
-| Síntoma | Qué comprobar |
+Nuestra referencia al aire es 892 y la referencia en agua es 350. El índice que calculamos es relativo y seguimos ajustando la calibración para representar mejor nuestro sustrato.
+
+Los estados son **rojo de 0 a 19 %, verde de 20 a 39 % y azul desde 40 %**.
+
+## Problemas que podemos revisar
+
+| Situación | Solución |
 |---|---|
-| Port busy / Permission denied | Cerrar Monitor Serie, Serial Plotter u otra instancia del capturador |
-| No aparece COM | Cable USB de datos, selección de Leonardo, drivers, reiniciar conexión |
-| No hay datos en dashboard | Confirmar que el capturador sigue activo, archivo CSV y puerto correcto |
-| Gráfico no cambia | Observar nueva línea en capturador, verificar que el CSV está actualizándose |
-| LED color incorrecto | Tipo de LED RGB y orden de canales; verificar resistencias y GND |
-| 0%/100% permanentes | Pin A0, VCC, contacto de sonda y referencias de calibración |
-| Python: module not found | Instalar software/dashboard/requirements.txt en el mismo Python |
-| El Leonardo se reinicia al abrir puerto | Esperar unos segundos; el registrador ignora mensajes distintos de datos |
+| No aparece el puerto | Revisamos el cable USB, la placa Leonardo y la selección de puerto |
+| Puerto ocupado | Cerramos el Monitor Serie antes de ejecutar Python |
+| No aparecen datos | Comprobamos que el capturador esté recibiendo y guardando las lecturas |
+| El LED muestra otro color | Revisamos las conexiones RGB y el tipo de módulo |
+| El índice queda siempre en 0 o 100 | Revisamos A0, alimentación y calibración |
 
-La aplicación es una opción **local**, no una web alojada públicamente. La disponibilidad depende de mantener el computador encendido. No se almacenan valores en la nube.
+Nuestro dashboard funciona localmente en el computador conectado por USB. No usamos WiFi ni enviamos datos a la nube.
