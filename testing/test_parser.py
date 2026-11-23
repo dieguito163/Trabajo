@@ -29,7 +29,7 @@ class TestParser(unittest.TestCase):
             "Lectura cruda: 1024  ->  Humedad: 23%  |  Estado: Humedo",
             "Lectura cruda: 700  ->  Humedad: 101%  |  Estado: Muy humedo",
             "Lectura cruda: 700  ->  Humedad: 10%  |  Estado: Muy humedo",
-            "Lectura cruda: 700  ->  Humedad: 12%  |  Estado: Algo seco",
+            "Lectura cruda: 700  ->  Humedad: 12%  |  Estado: No definido",
         ]
         for linea in lineas:
             with self.subTest(linea=linea):

@@ -37,7 +37,7 @@ En Linux reemplazar el puerto por /dev/ttyACM0, si corresponde. Para detener, Ct
 | fecha_hora | Hora local del PC con zona horaria |
 | lectura_adc | Valor crudo leído en A0 (0 a 1023) |
 | humedad_pct | Índice relativo derivado de la calibración 892/350 |
-| estado | Seco / Algo seco / Humedo / Muy humedo |
+| estado | Seco / Humedo / Muy humedo |
 
 El lector descarta líneas incompletas, fuera de rango o incoherentes con el estado y escribe en disco después de cada muestra válida. El dashboard no requiere que el Arduino esté encendido para **consultar mediciones ya almacenadas**.
 
