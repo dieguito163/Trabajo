@@ -25,8 +25,9 @@ jobs:
         run: |
           python -m pip install pillow
           python - <<'PY'
-          from PIL import Image
+          from PIL import Image, ImageFile
           from pathlib import Path
+          ImageFile.LOAD_TRUNCATED_IMAGES = True
           root = Path("hardware/fotos")
           imagen = Image.open(root / "vistas_del_montaje.jpg").convert("RGB")
           ancho,alto = imagen.size
