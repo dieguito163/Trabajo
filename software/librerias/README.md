@@ -1,9 +1,3 @@
-Dependencias
+# Dependencias
 
-El programa utiliza funciones estándar del entorno Arduino: pinMode, analogRead, analogWrite, map, constrain, delay y Serial. No requiere librerías externas.
-
-| Herramienta o paquete | Uso | Versión |
-| Arduino IDE | Abrir, compilar y cargar el programa | 2.x; registrar la versión exacta usada en la prueba |
-| Arduino AVR Boards | Soporte para Arduino UNO clásico | Registrar la versión instalada |
-
-En Arduino IDE se selecciona Arduino UNO dentro del paquete Arduino AVR Boards. La instalación utilizada por el equipo y su versión exacta todavía no se han registrado.
+El firmware Leonardo usa el **core Arduino AVR** y no requiere librerías externas. Para el registro USB y dashboard local se usan **pyserial, pandas y Streamlit**, documentadas en [requirements.txt](../dashboard/requirements.txt) y [FUENTES.md](../../FUENTES.md). No se emplea WiFi en el Leonardo.
