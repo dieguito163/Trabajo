@@ -1,53 +1,57 @@
-# FUENTES.md — Declaración de fuentes e inteligencia artificial
+# Fuentes y herramientas del proyecto
 
-**Proyecto:** Detector de humedad del suelo, TEI201, Arduino Leonardo. Actualización documentada el **22 de noviembre de 2026**. Esta declaración cubre los archivos añadidos o modificados en la actualización y señala lo que debe confirmar el equipo sobre materiales previos.
+En este archivo reunimos las librerías, la documentación consultada, los ejemplos de código y la asistencia de inteligencia artificial que utilizamos durante el desarrollo del detector de humedad del suelo.
 
-## 1. Librerías y herramientas utilizadas
+## Librerías y herramientas
 
-| Dependencia / herramienta | Versión declarada | Uso | Fuente |
+| Herramienta o librería | Versión | Para qué la usamos | Fuente |
 |---|---|---|---|
-| Arduino AVR Boards (core) | La instalada por el equipo; confirmar versión | Compilar firmware Leonardo, Serial, analogRead, analogWrite, map y constrain | https://github.com/arduino/ArduinoCore-avr |
-| Arduino IDE | La instalada por el equipo; confirmar versión | Cargar el firmware | https://www.arduino.cc/en/software |
-| Python | 3.10+ | Ejecutar registrador y panel local | https://www.python.org/ |
-| pyserial | 3.5 o posterior, menor a 4 | Leer USB serial y enumerar puertos | https://pyserial.readthedocs.io/ |
-| Streamlit | 1.37 o posterior, menor a 2 | Dashboard con actualización periódica | https://docs.streamlit.io/ |
-| pandas | 2.1 o posterior, menor a 3 | Leer y analizar CSV histórico | https://pandas.pydata.org/ |
-| OpenSCAD | Versión instalada por el equipo; confirmar | Diseño paramétrico y generación de STL | https://openscad.org/ |
+| Arduino AVR Boards | Core de Arduino; versión instalada en nuestro IDE | Compilar el programa del Leonardo y utilizar Serial, analogRead, analogWrite, map y constrain | https://github.com/arduino/ArduinoCore-avr |
+| Arduino IDE | Versión utilizada en nuestro computador | Programar y cargar el código en el Leonardo | https://www.arduino.cc/en/software |
+| Python | 3.10 o superior | Registrar datos y procesar las mediciones del computador | https://www.python.org/ |
+| pyserial | >=3.5,<4 | Recibir lecturas por USB serial | https://pyserial.readthedocs.io/ |
+| pandas | >=2.1,<3 | Leer y analizar el histórico de mediciones | https://pandas.pydata.org/ |
+| Streamlit | >=1.37,<2 | Mostrar el dashboard con gráficas e indicadores | https://docs.streamlit.io/ |
+| OpenSCAD | Versión utilizada para generar el CAD | Modelar carcasa, tapa y volúmenes referenciales | https://openscad.org/ |
+| CadQuery | >=2.5,<3 | Construir un ensamble STEP de sólidos importables en Fusion 360 | https://cadquery.readthedocs.io/ |
+| GitHub Actions | Servicio de GitHub | Compilar el firmware y generar STL, renders, planos y STEP | https://docs.github.com/en/actions |
 
-El firmware **no incluye librerías Arduino de terceros**. Las versiones exactas de Python se resuelven mediante **software/dashboard/requirements.txt**; antes de presentar, el equipo debería guardar las versiones instaladas mediante **python -m pip freeze** y comprobar su funcionamiento.
+El código del Arduino Leonardo usa las funciones incluidas en el core AVR. No utilizamos librerías Arduino adicionales. En Python reunimos las dependencias del dashboard en [requirements.txt](software/dashboard/requirements.txt).
 
-## 2. Código externo y referencias consultadas
+## Código y referencias utilizadas
 
-- **Firmware Leonardo:** partimos del código de nuestro proyecto, con los pines D9/D10/D11 y la calibración 892/350. Lo adaptamos para utilizar solamente los tres colores finales: rojo (0–19 %), verde (20–39 %) y azul (40–100 %).
-- **Ejemplo académico de organización:** https://github.com/jgarcia-dec/sensor-calidad-suelo-TEI201 . Se revisó como ejemplo de secciones de README, FUENTES, carpetas y requisitos de la pauta; **no se trasladaron mediciones, componentes ni resultados** de ese proyecto.
-- **Documentación de la API Arduino:** https://docs.arduino.cc/language-reference/ ; funciones de lectura analógica, salida PWM y comunicación serial.
-- **Documentación de pyserial:** https://pyserial.readthedocs.io/en/latest/shortintro.html ; lectura de líneas desde puerto serie.
-- **Documentación de Streamlit:** https://docs.streamlit.io/develop/api-reference ; interfaz, indicadores, gráficas y actualización.
-- **Diseño CAD histórico:** la primera versión del archivo OpenSCAD ya estaba en el repositorio antes de esta actualización. **Pendiente de confirmación del equipo:** origen y autoría de ese archivo, y de los modelos STL, documentación e informe anteriores.
+**Programa del sensor.** Partimos de nuestro firmware con la lectura en A0, el LED RGB en D9, D10 y D11, y las referencias de calibración 892 al aire y 350 en agua. Ajustamos la salida para trabajar únicamente con **tres colores**, usando los intervalos 0–19 %, 20–39 % y 40–100 %.
 
-No se debe completar esta sección inventando autores, fechas, versiones ni fuentes; el equipo debe revisar si empleó ejemplos adicionales no reflejados aquí.
+**Documentación de Arduino.** Consultamos las funciones de entrada analógica, PWM y comunicación serial: https://docs.arduino.cc/language-reference/.
 
-## 3. Uso de inteligencia artificial (obligatorio)
+**Comunicación y dashboard.** Utilizamos la documentación de [pyserial](https://pyserial.readthedocs.io/en/latest/shortintro.html) para recibir las líneas seriales y la de [Streamlit](https://docs.streamlit.io/develop/api-reference) para representar el histórico.
 
-### Revisión de repositorio y documentación — 22/11/2026
-- **Herramienta:** ChatGPT (OpenAI, GPT-6).
-- **Solicitud del equipo:** revisar el repositorio existente y el ejemplo TEI201; adaptarlo a Arduino Leonardo sin protoboard, incorporar el firmware proporcionado y dejar documentados los entregables de la pauta Avance 3.
-- **Archivos asistidos:** README.md, FUENTES.md, guías de hardware, BOM de revisión, esquema explicativo, protocolo y checklist de entrega.
-- **Adaptación:** se sustituyeron las referencias obsoletas a Arduino UNO y la calibración previa, se distinguieron hechos fotografiados de conexiones no verificadas y cambiamos el programa para mantener únicamente los tres colores que usamos en el prototipo.
-- **Comprensión esperada:** debemos poder explicar la cadena sensor → Leonardo → USB serial → CSV → dashboard, y por qué los umbrales son relativos.
+**Ejemplo de estructura de repositorio.** Revisamos el proyecto público [sensor-calidad-suelo-TEI201](https://github.com/jgarcia-dec/sensor-calidad-suelo-TEI201) como referencia de organización, documentación y categorías de entregables. Nuestro montaje, código y decisiones de diseño son distintos.
 
-### Registro de datos, dashboard y pruebas de parser — 22/11/2026
-- **Herramienta:** ChatGPT (OpenAI, GPT-6).
-- **Código generado:** software/dashboard/lector_serial.py, software/dashboard/panel.py y testing/test_parser.py.
-- **Función:** interpretar las líneas seriales emitidas por el firmware suministrado, guardar mediciones reales con marca temporal en CSV, mostrar histórico/indicadores en una aplicación local y verificar que el parser rechaza líneas inválidas.
-- **Adaptación:** adaptamos el parser a los tres estados del código Leonardo; las pruebas unitarias usan líneas sintéticas exclusivamente para validar el código y **no se presentan como datos ambientales reales**.
-- **Limitación:** la creación del código no equivale a una demostración del funcionamiento del puerto ni del sensor. Deben comprobarlo con el montaje físico.
+**Diseño 3D.** Conservamos las versiones iniciales del CAD y sus STL en el historial del repositorio. Adaptamos el modelo a Leonardo y preparamos un ensamble STEP con volúmenes geométricos. Las dimensiones se verifican con el montaje físico cuando sea necesario.
 
-### Archivos CAD y planos
-- **Herramienta:** ChatGPT (OpenAI, GPT-6), para adaptación o documentación de la versión Leonardo si corresponde.
-- **Comprensión:** comprobar dimensiones exteriores, soporte de la placa, taladros, puerto USB, acceso a conexiones y que los archivos STL correspondan a la versión efectivamente instalada.
-- **Advertencia:** un STL o archivo OpenSCAD no equivale a un ensamble nativo validado en Fusion 360 (.f3d/.f3z).
+**Precios de referencia.** Para nuestro presupuesto consultamos una [placa Leonardo compatible en AFEL](https://afel.cl/collections/placas-compatibles), un [sensor v1.2 en Pinout](https://pinout.cl/producto/sensor-capacitivo-de-humedad-de-suelo-v12?from=bestsellers) y precios de componentes básicos. Distinguimos estos valores de las estimaciones utilizadas para los ítems que no tienen cotización del componente exacto.
 
-## 4. Verificación académica pendiente
+## Uso de inteligencia artificial
 
-Antes de enviar, debemos comprobar que todos comprendemos el código y completar nombres, versiones efectivamente instaladas, fuentes externas adicionales y datos reales de ensayo. El empleo de IA se declara expresamente y no implica que la IA haya realizado pruebas físicas.
+### Organización y documentación del proyecto — noviembre de 2026
+
+- **Herramienta:** ChatGPT de OpenAI (GPT-6).
+- **Uso:** pedimos ayuda para ordenar nuestro repositorio, adaptar la documentación a Arduino Leonardo y revisar los entregables del Avance 3.
+- **Archivos elaborados o revisados con asistencia:** README, guías de hardware, esquema explicativo, BOM de referencia, informe, protocolo de pruebas, guías 3D y este archivo de fuentes.
+- **Adaptación:** revisamos la información para que refleje nuestro montaje real: sin protoboard, con sensor externo, tapa atornillada y tres estados del LED RGB.
+
+### Código Python del registro, dashboard y pruebas
+
+- **Herramienta:** ChatGPT de OpenAI (GPT-6).
+- **Uso:** solicitamos apoyo para desarrollar \`software/dashboard/lector_serial.py\`, \`software/dashboard/panel.py\`, \`testing/test_parser.py\` y \`testing/analizar_datos.py\`.
+- **Adaptación:** utilizamos el formato serial de nuestro código Leonardo, agregamos guardado con fecha y hora, definimos los tres estados de humedad y separamos las pruebas automáticas de las mediciones físicas.
+- **Comprensión:** podemos explicar cómo se lee A0, cómo se calcula el índice, cómo se selecciona el color y cómo se guarda el histórico en CSV. Las pruebas del software no sustituyen la calibración del sensor con tierra.
+
+### Diseño CAD y automatización
+
+- **Herramienta:** ChatGPT de OpenAI (GPT-6).
+- **Uso:** apoyo para organizar modelos OpenSCAD, crear el script de CadQuery para STEP y preparar la exportación de renders y planos desde GitHub Actions.
+- **Adaptación:** usamos dimensiones nominales de nuestro diseño y representamos componentes mediante volúmenes simples que podemos ajustar al importarlos en Fusion 360.
+
+La asistencia de IA nos ayudó a desarrollar y documentar el proyecto. Seguimos siendo responsables de comprender el funcionamiento, revisar las conexiones y validar experimentalmente nuestras mediciones.

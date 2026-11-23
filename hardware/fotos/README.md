@@ -1,17 +1,16 @@
-# Fotografías del prototipo
+# Fotografías de nuestro detector
 
-Estas son fotografías de nuestro detector de humedad del suelo ya montado dentro de la carcasa. Podemos observar la tapa atornillada, la salida del cable y el sensor capacitivo que permanece fuera de la caja.
+Estas imágenes muestran el montaje final con la carcasa impresa en 3D, la tapa atornillada y el sensor capacitivo conectado desde el exterior.
+
+![Tres ángulos del montaje](vistas_del_montaje.jpg)
 
 ## Vista superior
-
-![Carcasa vista desde arriba, con el sensor conectado](vista_superior.jpg)
+![Vista superior de la caja](vista_superior.jpg)
 
 ## Vista lateral
-
-![Salida lateral del cable y conexión con el sensor](vista_lateral.jpg)
+![Conexión del sensor y salida de cable](vista_lateral.jpg)
 
 ## Vista frontal
+![Vista frontal de la carcasa](vista_frontal.jpg)
 
-![Tapa y sonda del detector de humedad](vista_frontal.jpg)
-
-La tapa se puede retirar quitando los tornillos, lo que nos permite revisar el Arduino Leonardo, las conexiones y el módulo LED. Para documentar también el interior podemos incorporar una fotografía durante el desmontaje.
+La tapa se retira con tornillos, por lo que podemos acceder al Arduino y a las conexiones para hacer ajustes sin romper la carcasa.

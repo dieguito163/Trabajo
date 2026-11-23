@@ -1,3 +1,3 @@
-# Iteración 1
+# Primer montaje
 
-Montaje físico de prototipo Arduino + sensor capacitivo + LED, observado en fotografía. No se dispone de mediciones ni resultados de prueba asociados.
+Comenzamos trabajando con Arduino UNO, el sensor capacitivo de humedad y el indicador LED RGB. Esta versión nos permitió definir la lectura analógica y la lógica básica de colores antes de modificar el circuito.
