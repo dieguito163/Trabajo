@@ -98,7 +98,7 @@ Preparamos un [modelo 3D para Arduino Leonardo](diseno_3d/README.md) con sus pie
 
 ## Pruebas y mejoras
 
-En nuestra evaluación preliminar obtuvimos una **precisión del 81 %**. El prototipo funciona en general: responde a los cambios de lectura del sensor y utiliza el LED para representar el estado. Todavía necesitamos mejorar la **calibración** para que los valores correspondan mejor a las condiciones del suelo. Para respaldar ese porcentaje de manera reproducible debemos registrar cómo se calculó y con qué mediciones lo comparamos.
+En las pruebas preliminares obtuvimos un **81 % de aciertos al clasificar el estado de humedad**: contamos cuántas veces el color indicado coincidió con el estado esperado y lo dividimos por el total de pruebas. El prototipo funciona en general, pero todavía debemos mejorar la **calibración** para que la indicación sea más consistente. Este 81 % representa la exactitud de clasificación observada, **no la precisión numérica del sensor**. No conservamos aquí el número total de ensayos ni el detalle de cada resultado.
 
 Dejamos documentados el [protocolo](testing/protocolo_leonardo.md), el [análisis de funcionamiento](testing/reportes/resultados_preliminares.md) y las herramientas para analizar los datos que registremos.
 

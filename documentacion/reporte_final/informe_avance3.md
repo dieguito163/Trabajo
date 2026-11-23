@@ -103,7 +103,7 @@ Las medidas del modelo son nominales, por lo que necesitamos contrastar el monta
 
 ## 7. Pruebas de funcionamiento
 
-Durante las primeras pruebas observamos que **el prototipo funciona en general**: el sensor permite obtener lecturas y el indicador responde mediante los colores programados. En nuestra evaluación preliminar obtuvimos una **precisión del 81 %**. Este porcentaje corresponde a nuestra evaluación inicial; aún necesitamos documentar el criterio de comparación y los registros utilizados para reproducir el cálculo, por lo que no lo consideramos una precisión instrumental certificada.
+Durante las primeras pruebas observamos que **el prototipo funciona en general**: el sensor permite obtener lecturas y el indicador responde mediante los colores programados. Al contar las veces que el detector clasificó correctamente el estado de humedad, obtuvimos un **81 % de aciertos**. Calculamos este resultado dividiendo las clasificaciones correctas por el total de pruebas y multiplicando por 100. El dato representa la **exactitud de la clasificación de estados**, no la precisión de una medición física de humedad. No disponemos en este informe del total de ensayos ni del registro individual que permita verificar nuevamente el porcentaje.
 
 El aspecto que todavía debemos mejorar es la **calibración**. Aunque usamos referencias de 892 al aire y 350 en agua, necesitamos realizar ensayos sistemáticos con tierra seca y húmeda para verificar que esos valores sean representativos de nuestro sustrato. También debemos estudiar si los límites de 20 % y 40 % separan adecuadamente las condiciones que queremos mostrar.
 

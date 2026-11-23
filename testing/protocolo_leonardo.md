@@ -6,7 +6,7 @@ Nuestro objetivo es comprobar que el sensor detecta cambios asociados a la humed
 
 ## Funcionamiento observado
 
-En nuestras primeras pruebas **el dispositivo funciona en general** y obtuvimos un resultado preliminar de **81 % de precisión**. Hemos podido utilizar el sensor y el indicador luminoso, pero la **calibración todavía necesita ajustes**. Por ahora utilizamos una referencia de 892 al aire y 350 en agua; estos valores nos permiten calcular un índice, aunque necesitamos relacionarlo mejor con condiciones de suelo seco y húmedo. Para repetir la evaluación del 81 % registraremos la cantidad de pruebas, la referencia de comparación y el criterio de cálculo.
+En nuestras primeras pruebas **el dispositivo funciona en general** y obtuvimos **81 % de clasificaciones correctas del estado de humedad**. Hemos podido utilizar el sensor y el indicador luminoso, pero la **calibración todavía necesita ajustes**. Por ahora utilizamos una referencia de 892 al aire y 350 en agua; estos valores nos permiten calcular un índice, aunque necesitamos relacionarlo mejor con condiciones de suelo seco y húmedo. Para repetir la evaluación del 81 % registraremos el total de pruebas, el número de clasificaciones correctas y el criterio usado para establecer el estado esperado. Calcularemos la tasa de aciertos con `correctas / total × 100`.
 
 ## Condiciones de prueba
 
