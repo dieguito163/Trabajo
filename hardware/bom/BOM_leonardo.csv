@@ -1,10 +1,10 @@
-ID,Componente,Cantidad,Especificacion,Funcion,Costo_unitario_CLP,Costo_total_CLP,Estado_costo,Observaciones
-1,Arduino Leonardo,1,ATmega32u4; USB serial; ADC A0; PWM D9 D10 D11,Control y comunicacion,,,Por confirmar,Reemplaza el Arduino UNO anterior
-2,Sensor capacitivo de humedad,1,Salida analogica A0; modelo exacto por verificar,Medicion del sustrato,,,Por confirmar,Sonda fuera de la caja
-3,Modulo LED RGB,1,Canales R G B y comun; tipo de comun por verificar,Indicador visual,,,Por confirmar,Verificar resistencias integradas
-4,Resistencias limitadoras RGB,3,Valor segun caracteristicas de LED y alimentacion,Proteccion de canales,,,Condicional,Solo si el modulo no trae resistencias
-5,Cables/conectores aislados,1,Conjunto de conexiones directas sin protoboard,Cableado interno,,,Por confirmar,Medir longitud real del conjunto
-6,Cable USB de datos,1,Compatible con conector del Leonardo,Alimentacion y datos al computador,,,Por confirmar,Confirmar conector USB fisico
-7,Base impresa en 3D,1,PLA o PETG; dimensiones por verificar,Encapsulado,,,Por confirmar,No impermeable
-8,Tapa impresa en 3D,1,PLA o PETG; desmontable,Acceso y reparabilidad,,,Por confirmar,Fijaciones por tornillos
-9,Tornillos y elementos de fijacion,1,Juego de tornillos segun caja; medidas por verificar,Cierre desmontable,,,Por confirmar,La foto externa muestra varios tornillos
+componente,cantidad,unidad,especificacion,costo_unitario_CLP,subtotal_CLP,tipo_precio,fuente_o_nota
+Arduino Leonardo,1,unidad,ATmega32U4 A0 y PWM 9-10-11,12000,12000,referencia comercial,https://afel.cl/collections/placas-compatibles
+Sensor capacitivo humedad v1.2,1,unidad,salida analogica 3.3-5V,2390,2390,referencia comercial,https://pinout.cl/producto/sensor-capacitivo-de-humedad-de-suelo-v12?from=bestsellers
+LED RGB,1,unidad,indicador tricolor modulo por verificar,1500,1500,estimacion,no es cotizacion de la unidad real
+Resistencia limitadora,3,unidad,valor segun LED y tension,69,207,referencia proporcional,pack 10 unidades 690 CLP pinout.cl; condicional segun modulo
+Cables y conectores,1,conjunto,conexiones directas sin protoboard,1500,1500,estimacion,confirmar precio del conjunto
+Cable USB de datos,1,unidad,compatible con Leonardo,1500,1500,estimacion,confirmar tipo de conector
+Impresion 3D base y tapa,1,conjunto,PLA o PETG estimado,2500,2500,estimacion,no incluye mano de obra ni energia
+Tornillos y fijaciones,1,conjunto,desmontables medida por verificar,800,800,estimacion,confirmar juego utilizado
+TOTAL,,,,,22397,presupuesto referencial,CLP - no representa comprobantes de compra

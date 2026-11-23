@@ -1,23 +1,22 @@
-# Conexiones previstas | Arduino Leonardo (sin protoboard)
+# Esquema de conexiones
 
-| Función | Pin Leonardo | Señal en código | Observación |
-|---|---|---|---|
-| Salida sensor | A0 | sensorPin | Lectura ADC 10 bits |
-| Sensor alimentación | 5 V / tensión admitida por el sensor | — | Verificar pinout VCC del modelo real |
-| Sensor retorno | GND | — | Masa común |
-| LED rojo | D9 PWM | pinRojo | Resistencia limitadora si no existe en el módulo |
-| LED verde | D10 PWM | pinVerde | Resistencia limitadora si no existe en el módulo |
-| LED azul | D11 PWM | pinAzul | Resistencia limitadora si no existe en el módulo |
-| Común LED | GND, **solo si cátodo común** | — | Si ánodo común, ajustar firmware y alimentación |
-| Computador | USB de datos | Serial 9600 | Transmite lecturas para CSV + dashboard |
+Montamos el sistema con un Arduino Leonardo, un sensor capacitivo y un LED RGB de tres canales. El sensor está conectado a la entrada **A0** y las salidas PWM controlan los colores del indicador.
 
-No se utiliza protoboard. Se recomienda asegurar conexiones con conectores o soldadura electrónica aislada y alivio de tensión en la salida de cable del sensor.
+![Esquema funcional de nuestro circuito](esquema_leonardo.svg)
 
-**Comprobaciones obligatorias antes de energizar:**
-1. Confirmar el tipo de LED RGB y sus terminales; el código supone salida activa en alto.
-2. Confirmar si el módulo LED posee resistencias en los canales.
-3. Identificar pines del sensor por su **serigrafía real**, no solo por colores del cable.
-4. Verificar ausencia de cortocircuitos, polaridad, tensión y fijación de los conductores.
-5. Confirmar que la apertura de USB y cableado no dañen piezas al cerrar.
+| Cable / señal | Origen | Destino |
+|---|---|---|
+| Señal analógica | AOUT del sensor | A0 del Leonardo |
+| Alimentación | VCC del módulo sensor | Salida compatible de alimentación |
+| Tierra | GND del sensor | GND del Leonardo |
+| Canal rojo | D9 | Canal R del módulo RGB |
+| Canal verde | D10 | Canal G del módulo RGB |
+| Canal azul | D11 | Canal B del módulo RGB |
+| Común RGB | Común del LED | Tierra o alimentación, según el modelo |
+| Datos y alimentación | USB del Leonardo | Computador |
 
-El [esquema SVG](esquema_leonardo.svg) representa la **arquitectura del firmware**; no debe interpretarse como esquemático de fabricación validado sin revisar las conexiones interiores.
+Para evitar dañar el LED, tenemos que utilizar resistencias limitadoras si el módulo no las tiene integradas. Si el LED es de ánodo común, también es necesario invertir la lógica de intensidad del programa.
+
+El cableado es directo, sin protoboard. El esquema describe la asignación de señales de nuestro programa. La posición exacta de los terminales se comprueba con la serigrafía del módulo, porque no es seguro deducirla por los colores de los cables.
+
+[Diagrama general del sistema](esquema_leonardo.svg) · [Componentes utilizados](../bom/README.md)

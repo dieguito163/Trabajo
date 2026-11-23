@@ -1,29 +1,43 @@
-# Hardware | versión actual sin protoboard
+# Hardware
 
-## Configuración del prototipo fotografiado
+## Montaje
 
-Nuestro dispositivo incluye una **carcasa blanca impresa en 3D**, fijada con tornillos y con el sensor capacitivo externo conectado mediante un cable. La tapa tiene un LED visible. Reemplazamos la placa por un **Arduino Leonardo** y **eliminamos la protoboard**.
+Utilizamos un Arduino Leonardo, un sensor capacitivo de humedad y un indicador LED RGB. Realizamos las conexiones de forma directa, sin protoboard, para reducir el espacio ocupado dentro de la carcasa. Ubicamos el sensor fuera de la caja para insertarlo en la tierra y dejamos una apertura para el cable.
 
-Las fotografías exteriores muestran la existencia de la carcasa, la sonda y las fijaciones, pero **no muestran con suficiente detalle** el cableado interno, la orientación del LED ni todos los conectores. Necesitamos revisar las conexiones reales antes de afirmar que el circuito está validado.
+Nuestro encapsulado está impreso en 3D y utiliza tornillos en la tapa. Podemos retirar la tapa para acceder a los componentes y realizar ajustes o reparaciones.
 
-## Justificación de componentes
+![Montaje exterior](fotos/vista_lateral.jpg)
 
-| Componente | Justificación y compatibilidad | Limitación por verificar |
+## Selección de componentes
+
+| Componente | ¿Por qué lo elegimos? | Características relevantes |
 |---|---|---|
-| Arduino Leonardo (ATmega32u4) | 1 entrada analógica A0 y tres salidas PWM D9/D10/D11; puerto USB serial para registro local | Alimentación y montaje exactos |
-| Sensor capacitivo de humedad | Mide variaciones eléctricas asociadas al entorno de la sonda, con salida analógica | Calibración por tipo de suelo; no equivale directamente a contenido volumétrico |
-| LED RGB | Expresa tres estados de humedad sin pantalla adicional | Confirmar ánodo/cátodo, resistencias y cableado |
-| Carcasa 3D con tornillos | Aísla la electrónica del contacto accidental y permite retirar la tapa | No es impermeable; comprobar tolerancias |
-| Conexiones directas | Reduce volumen al eliminar la protoboard | Deben fijarse y aislarse para evitar cortes y cortocircuitos |
-| USB de datos | Alimenta y comunica la placa con el PC | El dashboard solo está disponible con PC conectado |
+| Arduino Leonardo | Nos permite leer una señal analógica, controlar los tres canales RGB y comunicarnos por USB | ATmega32U4; entrada A0 de 10 bits; PWM D9, D10 y D11 |
+| Sensor capacitivo de humedad | Nos permite identificar cambios en el estado del suelo sin utilizar dos electrodos metálicos expuestos como en un sensor resistivo | Salida analógica; alimentación según el módulo (referencia habitual 3,3–5 V) |
+| LED RGB | Muestra el resultado directamente, sin incorporar una pantalla adicional | Tres canales de color con salidas PWM |
+| Conectores y cables | Podemos conectar los elementos dentro de la caja sin utilizar una protoboard | Masas compartidas y conexiones aisladas |
+| Carcasa impresa en 3D | Protege la electrónica de golpes y facilita mantener el montaje ordenado | Tapa atornillada, salida de cable, acceso al puerto USB |
+| Cable USB | Permite alimentar y conectar el dispositivo con el programa de registro | Comunicación serial a 9600 baudios |
 
-**Diseño para reparación:** desconectar USB, retirar los tornillos de la tapa y acceder a placa, cableado y módulo LED sin destruir la carcasa. En la presentación debemos abrir la tapa y mostrar que podemos acceder a los componentes.
+Nuestro diseño se alimenta desde USB cuando utilizamos el registro de datos. No incorporamos una batería al montaje descrito.
 
-## Entregables
+## Conexiones
 
-- [Esquema funcional Leonardo](esquemas/esquema_leonardo.svg) y [tabla de conexiones](esquemas/README.md).
-- [BOM actualizada](bom/BOM_leonardo.csv); **los precios unitarios reales siguen pendientes de confirmación**.
-- [Fotografías](fotos/README.md) del prototipo ensamblado.
-- [Protocolo de pruebas](../testing/protocolo_leonardo.md).
+| Elemento | Pin |
+|---|---|
+| Señal del sensor | A0 |
+| Alimentación del sensor | VCC compatible con el módulo |
+| Tierra del sensor | GND |
+| Canal rojo del LED | D9 |
+| Canal verde del LED | D10 |
+| Canal azul del LED | D11 |
+| Común del LED | Conexión según tipo de módulo RGB |
+| Registro de datos | USB |
 
-No conectar directamente un LED discreto a los pines sin resistencias limitadoras. Si el módulo posee resistencias integradas, comprobarlo en la placa o datasheet.
+Nuestro código utiliza salidas PWM activas en alto. Para reproducir el montaje necesitamos revisar el orden de terminales del LED, su tipo de común y las resistencias limitadoras que corresponden al módulo instalado.
+
+[Esquema y conexiones](esquemas/README.md) · [Lista de materiales](bom/README.md) · [Fotografías](fotos/README.md)
+
+## Reparación
+
+Para acceder a los componentes, primero desconectamos la alimentación USB. Luego retiramos los tornillos de la tapa y revisamos el cableado, la placa y el módulo LED. El diseño evita tener que romper la carcasa para reemplazar los componentes. El sistema está pensado para utilizarse en interiores y mantener la electrónica alejada del agua.
