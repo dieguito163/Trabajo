@@ -2,6 +2,16 @@
 
 **TEI201 · Taller de Diseño en Ingeniería · Universidad Adolfo Ibáñez**
 
+Desarrollamos el proyecto entre cinco integrantes, distribuyendo las tareas de diseño, construcción, electrónica, programación y pruebas.
+
+| Integrante | Área de trabajo |
+|---|---|
+| Nicolás Bajwol | Diseño 3D |
+| Vicente Romero | Ensamblaje |
+| Samuel Gutiérrez | Hardware |
+| Diego Osorio | Software |
+| Clemente Alfonos | Ensamblaje y pruebas |
+
 ## 1. Problema
 
 En el cuidado de las plantas, uno de los problemas más comunes es no saber con claridad cuándo regar. La tierra puede verse seca en la superficie y conservar humedad en profundidad, o recibir demasiada agua cuando todavía no la necesita. Por eso decidimos desarrollar un dispositivo sencillo que nos ayude a interpretar el estado del suelo antes de tomar una decisión.
@@ -63,13 +73,13 @@ $
 h_{\text{relativa}}=\operatorname{limitar}_{[0,100]}\left(\frac{892-\text{ADC}}{892-350}\times100\right)
 $
 
-En Arduino implementamos este cálculo mediante \`map()\` y \`constrain()\`. El valor mostrado es un **índice relativo**, no una medición certificada de humedad volumétrica en porcentaje.
+En Arduino implementamos este cálculo mediante `map()` y `constrain()`. El valor mostrado es un **índice relativo**, no una medición certificada de humedad volumétrica en porcentaje.
 
 En nuestra versión actual utilizamos un LED de **tres colores**: rojo hasta 19 %, verde entre 20 y 39 %, y azul a partir de 40 %.
 
 ## 5. Registro de datos y visualización
 
-Además de la indicación luminosa, preparamos un sistema de registro utilizando el cable USB del Arduino Leonardo. Nuestro programa \`lector_serial.py\` recibe las lecturas y guarda cada registro con fecha y hora en un CSV local.
+Además de la indicación luminosa, preparamos un sistema de registro utilizando el cable USB del Arduino Leonardo. Nuestro programa `lector_serial.py` recibe las lecturas y guarda cada registro con fecha y hora en un CSV local.
 
 El dashboard desarrollado con Streamlit lee ese archivo y nos permite visualizar:
 
@@ -89,7 +99,7 @@ Construimos una caja para mantener el circuito protegido y ordenado. Dejamos el 
 
 Nuestro CAD contiene la base, la tapa y volúmenes representativos del Leonardo y del indicador. También incluimos el sensor como componente exterior. Los archivos del diseño se encuentran en [diseno_3d](../../diseno_3d/README.md), junto con los STL, planos, renders y el ensamble STEP para importarlo en Fusion 360.
 
-Las medidas del modelo son nominales, por lo que necesitamos contrastar el montaje físico con el CAD antes de considerar definitivo el modelo en Fusion 360. El archivo STEP se puede importar y guardar como documento de Fusion 360, pero no es un archivo nativo \`.f3d\` por sí mismo.
+Las medidas del modelo son nominales, por lo que necesitamos contrastar el montaje físico con el CAD antes de considerar definitivo el modelo en Fusion 360. El archivo STEP se puede importar y guardar como documento de Fusion 360, pero no es un archivo nativo `.f3d` por sí mismo.
 
 ## 7. Pruebas de funcionamiento
 

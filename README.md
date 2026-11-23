@@ -115,6 +115,14 @@ Dejamos documentados el [protocolo](testing/protocolo_leonardo.md), el [análisi
 | [iteraciones](iteraciones/) | Cambios realizados durante el desarrollo |
 | [FUENTES.md](FUENTES.md) | Librerías, referencias y uso de IA |
 
-**Integrantes:** completar con los nombres y roles de nuestros integrantes.
+## Integrantes y responsabilidades
+
+| Integrante | Responsabilidad |
+|---|---|
+| Nicolás Bajwol | Diseño 3D |
+| Vicente Romero | Ensamblaje |
+| Samuel Gutiérrez | Hardware |
+| Diego Osorio | Software |
+| Clemente Alfonos | Ensamblaje y pruebas |
 
 La documentación del proceso y las herramientas utilizadas está en [FUENTES.md](FUENTES.md).
