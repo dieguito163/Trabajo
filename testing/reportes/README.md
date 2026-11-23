@@ -1,8 +1,5 @@
-# Pruebas pendientes
+# Resultados de pruebas
 
-- Ajuste de Arduino a postes (posición y altura).
-- Acceso a USB-B/jack.
-- Alojamiento del LED y aislación de contactos.
-- Ensamble de tapa M3.
-- Lecturas sensor en suelo seco/húmedo.
-- Evaluación del indicador con usuarios.
+Documentamos nuestras [observaciones de funcionamiento y mejoras](resultados_preliminares.md).
+
+Para obtener estadísticas de una sesión guardada ejecutamos `python testing/analizar_datos.py --archivo testing/datos/lecturas.csv`. El informe calculado se guarda en `analisis_de_mediciones.md` cuando tenemos datos reales.

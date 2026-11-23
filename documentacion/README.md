@@ -1,3 +1,5 @@
-# Documentación
+# Documentación del proyecto
 
-Tema: detector de humedad del suelo con alerta luminosa. ODS 11, 12 y 15. El prototipo avisa cuándo evaluar el riego; no mide litros necesarios ni está certificado para exteriores.
+Nuestro [informe del detector de humedad](reporte_final/informe_avance3.md) describe el problema, la propuesta, el diseño, el funcionamiento y la validación del prototipo.
+
+Relacionamos el proyecto con el cuidado responsable de plantas y el uso informado del agua. El dispositivo ayuda a revisar cuándo regar, pero no mide por sí mismo la cantidad exacta de agua necesaria.
