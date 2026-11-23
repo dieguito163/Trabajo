@@ -1,46 +1,57 @@
-name: Generar STL imprimibles
+name: Generar STL y render Leonardo
 
 on:
   workflow_dispatch:
   push:
+    branches: [main]
     paths:
-      - 'diseno_3d/fusion360/*.scad'
-      - '.github/workflows/generar-stl.yml'
+      - "diseno_3d/fusion360/caja_sensor_leonardo.scad"
+      - "diseno_3d/planos/plano_leonardo.svg"
+      - ".github/workflows/generar-stl.yml"
 
 permissions:
   contents: write
 
 jobs:
-  exportar-stl:
+  exportar:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: true
-      - name: Instalar OpenSCAD
-        run: sudo apt-get update && sudo apt-get install -y openscad
-      - name: Exportar modelos STL
+      - name: Instalar conversores abiertos
         run: |
-          mkdir -p diseno_3d/stl
-          openscad -o diseno_3d/stl/base_arduino_uno.stl -D 'pieza="base"' diseno_3d/fusion360/caja_sensor_humedad.scad
-          openscad -o diseno_3d/stl/tapa_led.stl -D 'pieza="tapa"' diseno_3d/fusion360/caja_sensor_humedad.scad
-          openscad -o diseno_3d/stl/probeta_ajuste.stl -D 'pieza="calibracion"' diseno_3d/fusion360/caja_sensor_humedad.scad
-          test -s diseno_3d/stl/base_arduino_uno.stl
-          test -s diseno_3d/stl/tapa_led.stl
-          test -s diseno_3d/stl/probeta_ajuste.stl
-      - name: Publicar STL en el repositorio
+          sudo apt-get update
+          sudo apt-get install -y openscad xvfb librsvg2-bin
+      - name: Generar STL, render y plano PDF
+        run: |
+          mkdir -p diseno_3d/stl diseno_3d/renders diseno_3d/planos
+          CAD=diseno_3d/fusion360/caja_sensor_leonardo.scad
+          openscad -o diseno_3d/stl/base_leonardo_referencial.stl -D 'pieza="base"' "$CAD"
+          openscad -o diseno_3d/stl/tapa_leonardo_referencial.stl -D 'pieza="tapa"' "$CAD"
+          openscad -o diseno_3d/stl/probeta_leonardo_referencial.stl -D 'pieza="calibracion"' "$CAD"
+          xvfb-run -a openscad -o diseno_3d/renders/ensamble_leonardo_referencial.png --imgsize=1200,800 --autocenter --viewall --colorscheme=Tomorrow -D 'pieza="vista"' "$CAD"
+          rsvg-convert -f pdf -o diseno_3d/planos/plano_leonardo_referencial.pdf diseno_3d/planos/plano_leonardo.svg
+          test -s diseno_3d/stl/base_leonardo_referencial.stl
+          test -s diseno_3d/stl/tapa_leonardo_referencial.stl
+          test -s diseno_3d/renders/ensamble_leonardo_referencial.png
+          test -s diseno_3d/planos/plano_leonardo_referencial.pdf
+      - name: Publicar resultados en main
         if: github.ref == 'refs/heads/main'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add diseno_3d/stl/*.stl
+          git add diseno_3d/stl/*leonardo* diseno_3d/renders/*leonardo* diseno_3d/planos/*leonardo*.pdf
           if git diff --cached --quiet; then
-            echo "Los modelos STL ya están actualizados."
+            echo "Los archivos generados ya coinciden."
           else
-            git commit -m "Publicar modelos STL imprimibles [skip ci]"
+            git commit -m "Generar STL y plano referenciales de Leonardo [skip ci]"
             git push origin HEAD:main
           fi
       - uses: actions/upload-artifact@v4
         with:
-          name: caja_detector_humedad_STL
-          path: diseno_3d/stl/*.stl
+          name: cad-leonardo-referencial
+          path: |
+            diseno_3d/stl/*leonardo*.stl
+            diseno_3d/renders/*leonardo*.png
+            diseno_3d/planos/*leonardo*.pdf

@@ -1,0 +1,32 @@
+name: Validar firmware y parser
+
+on:
+  push:
+    branches: [main, entrega-avance3-leonardo-2026]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  parser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Pruebas de interpretación de tramas seriales
+        run: python -m unittest discover -s testing -p "test_*.py" -v
+      - name: Sintaxis de herramientas Python
+        run: python -m py_compile software/dashboard/lector_serial.py software/dashboard/panel.py
+  arduino:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: arduino/setup-arduino-cli@v2
+      - name: Instalar core y compilar para Leonardo
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install arduino:avr
+          arduino-cli compile --fqbn arduino:avr:leonardo firmware/detector_humedad
